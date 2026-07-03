@@ -1,0 +1,115 @@
+<div class="fade-in">
+
+    <div class="module-toolbar">
+
+        <div class="toolbar-left">
+
+            <h3>
+
+                Attendance Management
+
+            </h3>
+
+        </div>
+
+        <div class="toolbar-right">
+
+            <input
+                type="date"
+                class="form-control"
+                id="attendanceDate">
+
+            <select
+                class="form-select"
+                id="attendanceClass">
+
+                <option value="">Select Class</option>
+
+                <option>I</option>
+                <option>II</option>
+                <option>III</option>
+                <option>IV</option>
+                <option>V</option>
+                <option>VI</option>
+                <option>VII</option>
+                <option>VIII</option>
+                <option>IX</option>
+                <option>X</option>
+
+            </select>
+
+            <button
+                class="btn btn-primary"
+                onclick="loadAttendance()">
+
+                Load Attendance
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="attendance-table">
+
+        <table class="table table-bordered table-hover">
+
+            <thead>
+
+                <tr>
+
+                    <th>Admission No</th>
+
+                    <th>Student Name</th>
+
+                    <th>P1</th>
+
+                    <th>P2</th>
+
+                    <th>P3</th>
+
+                    <th>P4</th>
+
+                    <th>P5</th>
+
+                    <th>P6</th>
+
+                    <th>P7</th>
+
+                    <th>P8</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="attendanceTableBody">
+
+                <tr>
+
+                    <td colspan="10" class="text-center">
+
+                        Select Class and Date
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="mt-4">
+
+        <button
+            class="btn btn-success"
+            onclick="saveAttendance()">
+
+            Save Attendance
+
+        </button>
+
+    </div>
+
+</div>

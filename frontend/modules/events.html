@@ -1,0 +1,310 @@
+<!-- =====================================================
+Events Module
+Part 1
+===================================================== -->
+
+<div class="container-fluid">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <h4 class="mb-0">
+
+                Event Management
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <!-- Event Title -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Event Title
+
+                    </label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        class="form-control"
+                        placeholder="Enter Event Title">
+
+                </div>
+
+                <!-- Target Scope -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Target Audience
+
+                    </label>
+
+                    <select
+                        id="targetScope"
+                        class="form-select">
+
+                        <option value="">Select Target</option>
+
+                        <option value="Students">Students</option>
+
+                        <option value="Parents">Parents</option>
+
+                        <option value="Faculty">Faculty</option>
+
+                        <option value="All">All</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <!-- Description -->
+
+                <div class="col-md-12 mb-3">
+
+                    <label class="form-label">
+
+                        Description
+
+                    </label>
+
+                    <textarea
+                        id="description"
+                        class="form-control"
+                        rows="4"
+                        placeholder="Enter Event Description"></textarea>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <!-- Event Date -->
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        Event Date
+
+                    </label>
+
+                    <input
+                        type="date"
+                        id="eventDate"
+                        class="form-control">
+
+                </div>
+
+                <!-- Event Time -->
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        Event Time
+
+                    </label>
+
+                    <input
+                        type="time"
+                        id="eventTime"
+                        class="form-control">
+
+                </div>
+
+                <!-- Venue -->
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        Venue
+
+                    </label>
+
+                    <input
+                        type="text"
+                        id="venue"
+                        class="form-control"
+                        placeholder="Enter Venue">
+
+                </div>
+
+            </div>
+            <!-- =====================================================
+Events Module
+Part 2
+===================================================== -->
+
+            <div class="row">
+
+                <!-- Attachment -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Attachment
+
+                    </label>
+
+                    <input
+                        type="file"
+                        id="eventAttachment"
+                        class="form-control"
+                        accept=".pdf,.jpg,.jpeg,.png">
+
+                </div>
+
+                <!-- Status -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Event Status
+
+                    </label>
+
+                    <select
+                        id="eventStatus"
+                        class="form-select">
+
+                        <option value="">Select Status</option>
+
+                        <option value="Upcoming">Upcoming</option>
+
+                        <option value="Ongoing">Ongoing</option>
+
+                        <option value="Completed">Completed</option>
+
+                        <option value="Cancelled">Cancelled</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="mt-3">
+
+                <button
+                    id="saveEventBtn"
+                    class="btn btn-primary">
+
+                    Save Event
+
+                </button>
+
+                <button
+                    id="clearEventBtn"
+                    class="btn btn-secondary ms-2">
+
+                    Clear
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <br>
+    <!-- =====================================================
+Events Module
+Part 3
+===================================================== -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-header d-flex justify-content-between align-items-center">
+
+            <h5 class="mb-0">
+
+                Event List
+
+            </h5>
+
+            <input
+                type="text"
+                id="searchEvent"
+                class="form-control w-25"
+                placeholder="Search Events">
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Title</th>
+
+                            <th>Date</th>
+
+                            <th>Time</th>
+
+                            <th>Venue</th>
+
+                            <th>Status</th>
+
+                            <th>Target</th>
+
+                            <th>Created By</th>
+
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="eventTableBody">
+
+                        <tr>
+
+                            <td colspan="9" class="text-center">
+
+                                No Events Available
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+End Events Module
+===================================================== -->

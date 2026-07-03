@@ -1,0 +1,1080 @@
+/* =====================================================
+   GSR Universe ERP
+   Faculty Dashboard CSS
+   ===================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+
+    background:#F5F7FB;
+
+    overflow:hidden;
+
+}
+
+/* =====================================================
+   MAIN LAYOUT
+   ===================================================== */
+
+.wrapper{
+
+    display:flex;
+
+    width:100%;
+
+    height:100vh;
+
+}
+
+/* =====================================================
+   SIDEBAR
+   ===================================================== */
+
+.sidebar{
+
+    width:280px;
+
+    background:linear-gradient(180deg,#1E3A8A,#2563EB);
+
+    color:#fff;
+
+    display:flex;
+
+    flex-direction:column;
+
+    box-shadow:4px 0 15px rgba(0,0,0,.15);
+
+    z-index:1000;
+
+}
+
+.logo-section{
+
+    text-align:center;
+
+    padding:25px 20px;
+
+    border-bottom:1px solid rgba(255,255,255,.15);
+
+}
+
+.logo{
+
+    width:90px;
+
+    margin-bottom:15px;
+
+}
+
+.logo-section h4{
+
+    font-size:20px;
+
+    font-weight:700;
+
+    margin-bottom:5px;
+
+}
+
+.logo-section small{
+
+    color:#E5E7EB;
+
+}
+
+/* =====================================================
+   SIDEBAR MENU
+   ===================================================== */
+
+.sidebar-menu{
+
+    list-style:none;
+
+    padding:20px 15px;
+
+    overflow-y:auto;
+
+    flex:1;
+
+}
+
+.sidebar-menu li{
+
+    margin-bottom:8px;
+
+}
+
+.sidebar-menu li a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:13px 18px;
+
+    border-radius:12px;
+
+    transition:.3s;
+
+    font-size:15px;
+
+    font-weight:500;
+
+}
+
+.sidebar-menu li a:hover{
+
+    background:rgba(255,255,255,.15);
+
+    transform:translateX(6px);
+
+}
+
+.sidebar-menu li.active a{
+
+    background:white;
+
+    color:#2563EB;
+
+    font-weight:600;
+
+}
+
+.sidebar-menu i{
+
+    font-size:18px;
+
+}
+
+/* Scrollbar */
+
+.sidebar-menu::-webkit-scrollbar{
+
+    width:6px;
+
+}
+
+.sidebar-menu::-webkit-scrollbar-thumb{
+
+    background:#4F46E5;
+
+    border-radius:10px;
+
+}
+
+/* =====================================================
+   MAIN CONTENT
+   ===================================================== */
+
+.main-content{
+
+    flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    overflow-y:auto;
+
+    background:#F5F7FB;
+
+}
+
+/* =====================================================
+   TOP NAVBAR
+   ===================================================== */
+
+.top-navbar{
+
+    height:80px;
+
+    background:white;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 30px;
+
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+
+}
+
+.navbar-left h3{
+
+    font-weight:700;
+
+    color:#1E3A8A;
+
+}
+
+.navbar-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+/* =====================================================
+   SEARCH BOX
+   ===================================================== */
+
+.search-box{
+
+    width:300px;
+
+    height:45px;
+
+    background:#F3F4F6;
+
+    border-radius:30px;
+
+    display:flex;
+
+    align-items:center;
+
+    padding:0 18px;
+
+}
+
+.search-box i{
+
+    color:#64748B;
+
+}
+
+.search-box input{
+
+    border:none;
+
+    outline:none;
+
+    background:transparent;
+
+    margin-left:10px;
+
+    width:100%;
+
+}
+
+/* =====================================================
+   NOTIFICATION
+   ===================================================== */
+
+.notification-btn{
+
+    position:relative;
+
+    width:45px;
+
+    height:45px;
+
+    border:none;
+
+    background:#EEF2FF;
+
+    border-radius:50%;
+
+    color:#2563EB;
+
+    transition:.3s;
+
+}
+
+.notification-btn:hover{
+
+    background:#2563EB;
+
+    color:white;
+
+}
+
+.notification-badge{
+
+    position:absolute;
+
+    top:-5px;
+
+    right:-3px;
+
+    width:18px;
+
+    height:18px;
+
+    border-radius:50%;
+
+    background:red;
+
+    color:white;
+
+    font-size:11px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+/* =====================================================
+   FACULTY PROFILE
+===================================================== */
+
+.faculty-profile{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.profile-image{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:3px solid #2563EB;
+
+}
+
+.faculty-profile h6{
+
+    margin:0;
+
+    font-weight:600;
+
+    color:#1E3A8A;
+
+}
+
+.faculty-profile small{
+
+    color:#64748B;
+
+}
+
+/* =====================================================
+   SUMMARY SECTION
+===================================================== */
+
+.summary-section{
+
+    padding:25px;
+
+}
+
+.summary-card{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    transition:.3s;
+
+    margin-bottom:20px;
+
+    cursor:pointer;
+
+}
+
+.summary-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 15px 30px rgba(37,99,235,.15);
+
+}
+
+.summary-card h6{
+
+    color:#64748B;
+
+    font-weight:500;
+
+}
+
+.summary-card h2{
+
+    margin-top:10px;
+
+    font-size:32px;
+
+    color:#1E3A8A;
+
+    font-weight:700;
+
+}
+
+.card-icon{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:50%;
+
+    background:#EEF2FF;
+
+    color:#2563EB;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:30px;
+
+}
+
+/* =====================================================
+   CONTENT AREA
+===================================================== */
+
+.content-area{
+
+    flex:1;
+
+    margin:0 25px 25px;
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+    overflow:auto;
+
+}
+
+.content-header{
+
+    margin-bottom:25px;
+
+}
+
+.content-header h4{
+
+    font-weight:700;
+
+    color:#1E3A8A;
+
+}
+
+.content-header p{
+
+    color:#64748B;
+
+    margin-top:5px;
+
+}
+
+.module-content{
+
+    min-height:500px;
+
+}
+
+/* =====================================================
+   MODULE HEADER
+===================================================== */
+
+.module-toolbar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+}
+
+.toolbar-left{
+
+    display:flex;
+
+    gap:12px;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+}
+
+.toolbar-right{
+
+    display:flex;
+
+    gap:12px;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+}
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.btn-primary{
+
+    background:#2563EB;
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:10px 20px;
+
+}
+
+.btn-primary:hover{
+
+    background:#1D4ED8;
+
+}
+
+.btn-success{
+
+    border-radius:10px;
+
+}
+
+.btn-warning{
+
+    border-radius:10px;
+
+}
+
+.btn-danger{
+
+    border-radius:10px;
+
+}
+
+/* =====================================================
+   SEARCH INPUT
+===================================================== */
+
+.search-input{
+
+    width:280px;
+
+    border-radius:10px;
+
+    border:1px solid #E5E7EB;
+
+    padding:10px 15px;
+
+}
+
+.filter-select{
+
+    width:180px;
+
+    border-radius:10px;
+
+}
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.table-container{
+
+    overflow-x:auto;
+
+}
+
+.table{
+
+    margin-top:20px;
+
+}
+
+.table thead{
+
+    background:#2563EB;
+
+    color:white;
+
+}
+
+.table th{
+
+    padding:15px;
+
+    border:none;
+
+}
+
+.table td{
+
+    padding:15px;
+
+    vertical-align:middle;
+
+}
+
+.table tbody tr{
+
+    transition:.2s;
+
+}
+
+.table tbody tr:hover{
+
+    background:#F8FAFC;
+
+}
+
+/* =====================================================
+   ACTION BUTTONS
+===================================================== */
+
+.action-btn{
+
+    width:35px;
+
+    height:35px;
+
+    border:none;
+
+    border-radius:8px;
+
+    margin-right:5px;
+
+    color:white;
+
+}
+
+.view-btn{
+
+    background:#10B981;
+
+}
+
+.edit-btn{
+
+    background:#3B82F6;
+
+}
+
+.delete-btn{
+
+    background:#EF4444;
+
+}
+/* =====================================================
+   FORMS
+===================================================== */
+
+.form-card{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+    margin-bottom:25px;
+
+}
+
+.form-control,
+.form-select{
+
+    border-radius:10px;
+
+    min-height:45px;
+
+    border:1px solid #D1D5DB;
+
+}
+
+.form-control:focus,
+.form-select:focus{
+
+    border-color:#2563EB;
+
+    box-shadow:0 0 0 .2rem rgba(37,99,235,.15);
+
+}
+
+/* =====================================================
+   PERIOD WISE ATTENDANCE
+===================================================== */
+
+.attendance-table{
+
+    overflow-x:auto;
+
+}
+
+.attendance-table table{
+
+    min-width:1200px;
+
+}
+
+.period-box{
+
+    width:34px;
+
+    height:34px;
+
+    border:2px solid #2563EB;
+
+    border-radius:8px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    margin:auto;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+.period-box:hover{
+
+    background:#2563EB;
+
+    color:white;
+
+}
+
+.period-present{
+
+    background:#10B981;
+
+    color:white;
+
+    border-color:#10B981;
+
+}
+
+.period-absent{
+
+    background:#EF4444;
+
+    color:white;
+
+    border-color:#EF4444;
+
+}
+
+.period-leave{
+
+    background:#F59E0B;
+
+    color:white;
+
+    border-color:#F59E0B;
+
+}
+
+/* =====================================================
+   FILE UPLOAD
+===================================================== */
+
+.upload-box{
+
+    border:2px dashed #2563EB;
+
+    border-radius:15px;
+
+    padding:40px;
+
+    text-align:center;
+
+    color:#2563EB;
+
+    background:#F8FAFF;
+
+    transition:.3s;
+
+}
+
+.upload-box:hover{
+
+    background:#EEF4FF;
+
+}
+
+.upload-box i{
+
+    font-size:50px;
+
+    margin-bottom:15px;
+
+}
+
+/* =====================================================
+   STATUS BADGES
+===================================================== */
+
+.badge-success{
+
+    background:#10B981;
+
+    color:white;
+
+    padding:6px 12px;
+
+    border-radius:30px;
+
+}
+
+.badge-warning{
+
+    background:#F59E0B;
+
+    color:white;
+
+    padding:6px 12px;
+
+    border-radius:30px;
+
+}
+
+.badge-danger{
+
+    background:#EF4444;
+
+    color:white;
+
+    padding:6px 12px;
+
+    border-radius:30px;
+
+}
+
+/* =====================================================
+   PAGE ANIMATION
+===================================================== */
+
+.fade-in{
+
+    animation:fadeIn .4s ease;
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(15px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:1200px){
+
+    .summary-card{
+
+        margin-bottom:20px;
+
+    }
+
+}
+
+@media(max-width:992px){
+
+    .sidebar{
+
+        width:80px;
+
+    }
+
+    .logo-section h4,
+    .logo-section small{
+
+        display:none;
+
+    }
+
+    .sidebar-menu a{
+
+        justify-content:center;
+
+        padding:15px;
+
+    }
+
+    .sidebar-menu a span{
+
+        display:none;
+
+    }
+
+    .sidebar-menu i{
+
+        font-size:22px;
+
+    }
+
+    .search-box{
+
+        display:none;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .top-navbar{
+
+        padding:15px;
+
+    }
+
+    .faculty-profile div{
+
+        display:none;
+
+    }
+
+    .summary-section{
+
+        padding:15px;
+
+    }
+
+    .content-area{
+
+        margin:15px;
+
+        padding:15px;
+
+    }
+
+}
+
+@media(max-width:576px){
+
+    .sidebar{
+
+        position:fixed;
+
+        left:-280px;
+
+        top:0;
+
+        bottom:0;
+
+        transition:.3s;
+
+    }
+
+    .sidebar.show{
+
+        left:0;
+
+    }
+
+    .main-content{
+
+        width:100%;
+
+    }
+
+}
+
+/* =====================================================
+   CUSTOM SCROLLBAR
+===================================================== */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+    height:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#2563EB;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#EEF2FF;
+
+}

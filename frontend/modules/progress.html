@@ -1,0 +1,271 @@
+<!-- =====================================================
+Progress Cards Module
+Part 1
+===================================================== -->
+
+<div class="container-fluid">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <h4 class="mb-0">
+
+                Progress Card Management
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <!-- Student -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Student
+
+                    </label>
+
+                    <select
+                        id="studentSelect"
+                        class="form-select">
+
+                        <option value="">
+
+                            Select Student
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Academic Year -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Academic Year
+
+                    </label>
+
+                    <select
+                        id="academicYearSelect"
+                        class="form-select">
+
+                        <option value="">
+
+                            Select Academic Year
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <!-- Exam Name -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Examination
+
+                    </label>
+
+                    <select
+                        id="examName"
+                        class="form-select">
+
+                        <option value="">
+
+                            Select Examination
+
+                        </option>
+
+                        <option value="Slip Test">
+
+                            Slip Test
+
+                        </option>
+
+                        <option value="Unit Test 1">
+
+                            Unit Test 1
+
+                        </option>
+
+                        <option value="Unit Test 2">
+
+                            Unit Test 2
+
+                        </option>
+
+                        <option value="Quarterly">
+
+                            Quarterly
+
+                        </option>
+
+                        <option value="Half Yearly">
+
+                            Half Yearly
+
+                        </option>
+
+                        <option value="Pre Final">
+
+                            Pre Final
+
+                        </option>
+
+                        <option value="Annual">
+
+                            Annual
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- PDF Upload -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Progress Card PDF
+
+                    </label>
+
+                    <input
+                        type="file"
+                        id="progressPdf"
+                        class="form-control"
+                        accept=".pdf">
+
+                </div>
+
+            </div>
+            <!-- =====================================================
+Progress Cards Module
+Part 2
+===================================================== -->
+
+            <div class="row mt-3">
+
+                <div class="col-md-12">
+
+                    <button
+                        id="saveProgressBtn"
+                        class="btn btn-primary">
+
+                        Upload Progress Card
+
+                    </button>
+
+                    <button
+                        id="clearProgressBtn"
+                        class="btn btn-secondary ms-2"
+                        type="reset">
+
+                        Clear
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <br>
+    <!-- =====================================================
+Progress Cards Module
+Part 3
+===================================================== -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-header d-flex justify-content-between align-items-center">
+
+            <h5 class="mb-0">
+
+                Progress Card List
+
+            </h5>
+
+            <input
+                type="text"
+                id="searchProgress"
+                class="form-control w-25"
+                placeholder="Search Student">
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Student</th>
+
+                            <th>Academic Year</th>
+
+                            <th>Examination</th>
+
+                            <th>PDF</th>
+
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="progressTableBody">
+
+                        <tr>
+
+                            <td colspan="6" class="text-center">
+
+                                No Progress Cards Available
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+End Progress Cards Module
+===================================================== -->

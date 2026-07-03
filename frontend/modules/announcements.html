@@ -1,0 +1,321 @@
+<!-- =====================================================
+Announcements Module
+Part 1
+===================================================== -->
+
+<div class="container-fluid">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <h4 class="mb-0">
+
+                Announcement Management
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <!-- Class -->
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        Class
+
+                    </label>
+
+                    <select
+                        id="classSelect"
+                        class="form-select">
+
+                        <option value="">
+
+                            Select Class
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Academic Year -->
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        Academic Year
+
+                    </label>
+
+                    <select
+                        id="academicYearSelect"
+                        class="form-select">
+
+                        <option value="">
+
+                            Select Academic Year
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Target -->
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        Target Audience
+
+                    </label>
+
+                    <select
+                        id="targetScope"
+                        class="form-select">
+
+                        <option value="">
+
+                            Select Target
+
+                        </option>
+
+                        <option value="Students">
+
+                            Students
+
+                        </option>
+
+                        <option value="Parents">
+
+                            Parents
+
+                        </option>
+
+                        <option value="Faculty">
+
+                            Faculty
+
+                        </option>
+
+                        <option value="All">
+
+                            All
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <!-- Title -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Announcement Title
+
+                    </label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        class="form-control"
+                        placeholder="Enter Announcement Title">
+
+                </div>
+
+                <!-- Priority -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Priority
+
+                    </label>
+
+                    <select
+                        id="priority"
+                        class="form-select">
+
+                        <option value="">
+
+                            Select Priority
+
+                        </option>
+
+                        <option value="Low">
+
+                            Low
+
+                        </option>
+
+                        <option value="Medium">
+
+                            Medium
+
+                        </option>
+
+                        <option value="High">
+
+                            High
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <!-- Message -->
+
+                <div class="col-md-12 mb-3">
+
+                    <label class="form-label">
+
+                        Announcement Message
+
+                    </label>
+
+                    <textarea
+                        id="message"
+                        rows="5"
+                        class="form-control"
+                        placeholder="Enter Announcement Message"></textarea>
+
+                </div>
+
+            </div>
+            <!-- =====================================================
+Announcements Module
+Part 2
+===================================================== -->
+
+            <div class="row mt-3">
+
+                <div class="col-md-12">
+
+                    <button
+                        id="saveAnnouncementBtn"
+                        class="btn btn-primary">
+
+                        Save Announcement
+
+                    </button>
+
+                    <button
+                        id="clearAnnouncementBtn"
+                        class="btn btn-secondary ms-2"
+                        type="reset">
+
+                        Clear
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <br>
+    <!-- =====================================================
+Announcements Module
+Part 3
+===================================================== -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-header d-flex justify-content-between align-items-center">
+
+            <h5 class="mb-0">
+
+                Announcement List
+
+            </h5>
+
+            <input
+                type="text"
+                id="searchAnnouncement"
+                class="form-control w-25"
+                placeholder="Search Announcement">
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Class</th>
+
+                            <th>Section</th>
+
+                            <th>Title</th>
+
+                            <th>Priority</th>
+
+                            <th>Target</th>
+
+                            <th>Created By</th>
+
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="announcementTableBody">
+
+                        <tr>
+
+                            <td colspan="8" class="text-center">
+
+                                No Announcements Available
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+End Announcement Module
+===================================================== -->

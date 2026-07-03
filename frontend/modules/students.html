@@ -1,0 +1,347 @@
+<div class="fade-in">
+
+    <div class="module-toolbar">
+
+        <div class="toolbar-left">
+
+            <h3>Students Management</h3>
+
+        </div>
+
+        <div class="toolbar-right">
+
+            <button
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#studentModal">
+
+                <i class="bi bi-plus-circle"></i>
+
+                Add Student
+
+            </button>
+
+            <input
+                type="text"
+                class="form-control search-input"
+                id="studentSearch"
+                placeholder="Search Student">
+
+            <select
+                class="form-select filter-select"
+                id="classFilter">
+
+                <option value="">All Classes</option>
+
+                <option>I</option>
+                <option>II</option>
+                <option>III</option>
+                <option>IV</option>
+                <option>V</option>
+                <option>VI</option>
+                <option>VII</option>
+                <option>VIII</option>
+                <option>IX</option>
+                <option>X</option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+    <div class="table-container">
+
+        <table class="table table-bordered table-hover">
+
+            <thead>
+
+                <tr>
+
+                    <th>Admission No</th>
+
+                    <th>Student Name</th>
+
+                    <th>Gender</th>
+
+                    <th>Class</th>
+
+                    <th>Section</th>
+
+                    <th>Parent Mobile</th>
+
+                    <th width="180">Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="studentTableBody">
+
+                <tr>
+
+                    <td colspan="7" class="text-center">
+
+                        Loading Students...
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+<!-- =====================================================
+   ADD / EDIT STUDENT MODAL
+===================================================== -->
+
+<div class="modal fade"
+     id="studentModal"
+     tabindex="-1"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-xl">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+
+                    Student Registration
+
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal">
+
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <form id="studentForm">
+
+                    <input
+                        type="hidden"
+                        id="studentId">
+
+                    <div class="row">
+
+                        <div class="col-md-4 mb-3">
+
+                            <label class="form-label">
+
+                                Admission No
+
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="admissionNo"
+                                required>
+
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+
+                            <label class="form-label">
+
+                                Student Name
+
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="studentName"
+                                required>
+
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+
+                            <label class="form-label">
+
+                                Gender
+
+                            </label>
+
+                            <select
+                                class="form-select"
+                                id="gender">
+
+                                <option value="">Select</option>
+                                <option>Male</option>
+                                <option>Female</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-3 mb-3">
+
+                            <label class="form-label">
+
+                                Date of Birth
+
+                            </label>
+
+                            <input
+                                type="date"
+                                class="form-control"
+                                id="dob">
+
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+
+                            <label class="form-label">
+
+                                Class
+
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="className">
+
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+
+                            <label class="form-label">
+
+                                Section
+
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="section">
+
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+
+                            <label class="form-label">
+
+                                Roll Number
+
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="rollNumber">
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+
+                                Parent Name
+
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="parentName">
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+
+                                Parent Mobile
+
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="parentMobile">
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-12 mb-3">
+
+                            <label class="form-label">
+
+                                Address
+
+                            </label>
+
+                            <textarea
+                                class="form-control"
+                                rows="3"
+                                id="address"></textarea>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">
+
+                    Close
+
+                </button>
+
+                <button
+                    class="btn btn-success"
+                    id="saveStudentBtn"
+                    onclick="saveStudent()">
+
+                    Save Student
+
+                </button>
+
+                <button
+                    class="btn btn-primary d-none"
+                    id="updateStudentBtn"
+                    onclick="updateStudent()">
+
+                    Update Student
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

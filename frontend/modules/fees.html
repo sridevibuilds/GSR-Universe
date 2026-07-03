@@ -1,0 +1,319 @@
+<!-- =====================================================
+Fees Module
+Part 1
+===================================================== -->
+
+<div class="container-fluid">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <h4 class="mb-0">
+
+                Fee Management
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <!-- Student -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Student
+
+                    </label>
+
+                    <select
+                        id="studentSelect"
+                        class="form-select">
+
+                        <option value="">
+
+                            Select Student
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Academic Year -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Academic Year
+
+                    </label>
+
+                    <select
+                        id="academicYearSelect"
+                        class="form-select">
+
+                        <option value="">
+
+                            Select Academic Year
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <!-- Total Fee -->
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        Total Fee
+
+                    </label>
+
+                    <input
+                        type="number"
+                        id="totalFee"
+                        class="form-control"
+                        placeholder="Enter Total Fee">
+
+                </div>
+
+                <!-- Paid Fee -->
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        Paid Fee
+
+                    </label>
+
+                    <input
+                        type="number"
+                        id="paidFee"
+                        class="form-control"
+                        placeholder="Enter Paid Fee">
+
+                </div>
+
+                <!-- Pending Fee -->
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        Pending Fee
+
+                    </label>
+
+                    <input
+                        type="number"
+                        id="pendingFee"
+                        class="form-control"
+                        placeholder="Enter Pending Fee">
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <!-- Payment Status -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Payment Status
+
+                    </label>
+
+                    <select
+                        id="paymentStatus"
+                        class="form-select">
+
+                        <option value="">
+
+                            Select Status
+
+                        </option>
+
+                        <option value="Paid">
+
+                            Paid
+
+                        </option>
+
+                        <option value="Partial">
+
+                            Partial
+
+                        </option>
+
+                        <option value="Pending">
+
+                            Pending
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Payment Date -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Payment Date
+
+                    </label>
+
+                    <input
+                        type="date"
+                        id="paymentDate"
+                        class="form-control">
+
+                </div>
+
+            </div>
+            <!-- =====================================================
+Fees Module
+Part 2
+===================================================== -->
+
+            <div class="row mt-3">
+
+                <div class="col-md-12">
+
+                    <button
+                        id="saveFeeBtn"
+                        class="btn btn-primary">
+
+                        Save Fee Details
+
+                    </button>
+
+                    <button
+                        id="clearFeeBtn"
+                        type="reset"
+                        class="btn btn-secondary ms-2">
+
+                        Clear
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <br>
+    <!-- =====================================================
+Fees Module
+Part 3
+Fee Details List
+===================================================== -->
+
+    <div class="card shadow-sm mt-4">
+
+        <div class="card-header d-flex justify-content-between align-items-center">
+
+            <h5 class="mb-0">
+
+                Fee Details List
+
+            </h5>
+
+            <div class="w-25">
+
+                <input
+                    type="text"
+                    id="searchFee"
+                    class="form-control"
+                    placeholder="Search Fee Details">
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover align-middle">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Student</th>
+
+                            <th>Academic Year</th>
+
+                            <th>Total Fee</th>
+
+                            <th>Paid Fee</th>
+
+                            <th>Pending Fee</th>
+
+                            <th>Payment Status</th>
+
+                            <th>Payment Date</th>
+
+                            <th width="150">
+
+                                Actions
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="feeTableBody">
+
+                        <tr>
+
+                            <td colspan="9" class="text-center">
+
+                                No Fee Records Available
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+End Fees Module
+===================================================== -->

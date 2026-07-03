@@ -1,0 +1,297 @@
+<!-- ==========================================
+Homework Module
+Part 1
+========================================== -->
+
+<div class="container-fluid">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <h4 class="mb-0">
+                Homework Management
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <!-- Class -->
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+                        Class
+                    </label>
+
+                    <select
+                        id="classSelect"
+                        class="form-select">
+
+                        <option value="">
+                            Select Class
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Academic Year -->
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+                        Academic Year
+                    </label>
+
+                    <select
+                        id="academicYearSelect"
+                        class="form-select">
+
+                        <option value="">
+                            Select Academic Year
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Subject -->
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+                        Subject
+                    </label>
+
+                    <select
+                        id="subjectSelect"
+                        class="form-select">
+
+                        <option value="">
+                            Select Subject
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <!-- Homework Title -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Homework Title
+                    </label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        class="form-control"
+                        placeholder="Enter Homework Title">
+
+                </div>
+
+                <!-- Due Date -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Due Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="dueDate"
+                        class="form-control">
+
+                </div>
+
+            </div>
+            <!-- ==========================================
+Homework Module
+Part 2
+========================================== -->
+
+            <div class="row">
+
+                <!-- Homework Description -->
+
+                <div class="col-md-12 mb-3">
+
+                    <label class="form-label">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        class="form-control"
+                        rows="5"
+                        placeholder="Enter Homework Description"></textarea>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <!-- Attachment Name -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Attachment Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="attachmentName"
+                        class="form-control"
+                        placeholder="Enter Attachment Name">
+
+                </div>
+
+                <!-- Attachment Path -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+                        Attachment Path
+                    </label>
+
+                    <input
+                        type="text"
+                        id="attachmentPath"
+                        class="form-control"
+                        placeholder="Enter Attachment Path">
+
+                </div>
+
+            </div>
+
+            <div class="row mt-3">
+
+                <div class="col-md-12">
+
+                    <button
+                        id="saveHomeworkBtn"
+                        class="btn btn-primary">
+
+                        Save Homework
+
+                    </button>
+
+                    <button
+                        id="clearHomeworkBtn"
+                        class="btn btn-secondary ms-2"
+                        type="reset">
+
+                        Clear
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <br>
+    <!-- ==========================================
+Homework Module
+Part 3
+Homework List
+========================================== -->
+
+    <div class="card shadow-sm mt-4">
+
+        <div class="card-header d-flex justify-content-between align-items-center">
+
+            <h5 class="mb-0">
+                Homework List
+            </h5>
+
+            <div class="w-25">
+
+                <input
+                    type="text"
+                    id="searchHomework"
+                    class="form-control"
+                    placeholder="Search Homework">
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover align-middle">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Class</th>
+
+                            <th>Section</th>
+
+                            <th>Academic Year</th>
+
+                            <th>Subject</th>
+
+                            <th>Title</th>
+
+                            <th>Description</th>
+
+                            <th>Due Date</th>
+
+                            <th>Attachment</th>
+
+                            <th>Created By</th>
+
+                            <th width="150">Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="homeworkTableBody">
+
+                        <tr>
+
+                            <td colspan="11" class="text-center">
+
+                                No Homework Available
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+End Homework Module
+========================================== -->

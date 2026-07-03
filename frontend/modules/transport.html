@@ -1,0 +1,309 @@
+<!-- =====================================================
+Transport Module
+Part 1
+===================================================== -->
+
+<div class="container-fluid">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <h4 class="mb-0">
+
+                Transport Management
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <!-- Student -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Student
+
+                    </label>
+
+                    <select
+                        id="studentSelect"
+                        class="form-select">
+
+                        <option value="">
+
+                            Select Student
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Bus Number -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Bus Number
+
+                    </label>
+
+                    <input
+                        type="text"
+                        id="busNumber"
+                        class="form-control"
+                        placeholder="Enter Bus Number">
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Route Name
+
+                    </label>
+
+                    <input
+                        type="text"
+                        id="routeName"
+                        class="form-control"
+                        placeholder="Enter Route Name">
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Pickup Point
+
+                    </label>
+
+                    <input
+                        type="text"
+                        id="pickupPoint"
+                        class="form-control"
+                        placeholder="Enter Pickup Point">
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Drop Point
+
+                    </label>
+
+                    <input
+                        type="text"
+                        id="dropPoint"
+                        class="form-control"
+                        placeholder="Enter Drop Point">
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Driver Name
+
+                    </label>
+
+                    <input
+                        type="text"
+                        id="driverName"
+                        class="form-control"
+                        placeholder="Enter Driver Name">
+
+                </div>
+
+            </div>
+            <!-- =====================================================
+Transport Module
+Part 2
+===================================================== -->
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Driver Mobile
+
+                    </label>
+
+                    <input
+                        type="text"
+                        id="driverMobile"
+                        class="form-control"
+                        placeholder="Enter Driver Mobile">
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Attendant Name
+
+                    </label>
+
+                    <input
+                        type="text"
+                        id="attendantName"
+                        class="form-control"
+                        placeholder="Enter Attendant Name">
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Attendant Mobile
+
+                    </label>
+
+                    <input
+                        type="text"
+                        id="attendantMobile"
+                        class="form-control"
+                        placeholder="Enter Attendant Mobile">
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Remarks
+
+                    </label>
+
+                    <input
+                        type="text"
+                        id="remarks"
+                        class="form-control"
+                        placeholder="Enter Remarks">
+
+                </div>
+
+            </div>
+
+            <button
+                id="saveTransportBtn"
+                class="btn btn-primary">
+
+                Save Transport
+
+            </button>
+
+            <button
+                id="clearTransportBtn"
+                class="btn btn-secondary ms-2">
+
+                Clear
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <br>
+    <!-- =====================================================
+Transport Module
+Part 3
+===================================================== -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-header d-flex justify-content-between align-items-center">
+
+            <h5 class="mb-0">
+
+                Transport List
+
+            </h5>
+
+            <input
+                type="text"
+                id="searchTransport"
+                class="form-control w-25"
+                placeholder="Search Student">
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>#</th>
+                            <th>Student</th>
+                            <th>Class</th>
+                            <th>Bus No</th>
+                            <th>Route</th>
+                            <th>Driver</th>
+                            <th>Driver Mobile</th>
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="transportTableBody">
+
+                        <tr>
+
+                            <td colspan="8" class="text-center">
+
+                                No Transport Records Available
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+End Transport Module
+===================================================== -->

@@ -1,0 +1,240 @@
+<!-- =====================================================
+Assessment Results Module
+Part 1
+===================================================== -->
+
+<div class="container-fluid">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <h4 class="mb-0">
+
+                Assessment Results
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <!-- Assessment -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Assessment
+
+                    </label>
+
+                    <select
+                        id="assessmentSelect"
+                        class="form-select">
+
+                        <option value="">
+
+                            Select Assessment
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Student -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Student
+
+                    </label>
+
+                    <select
+                        id="studentMappingSelect"
+                        class="form-select">
+
+                        <option value="">
+
+                            Select Student
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <!-- Marks Obtained -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Marks Obtained
+
+                    </label>
+
+                    <input
+                        type="number"
+                        id="marksObtained"
+                        class="form-control"
+                        placeholder="Enter Marks">
+
+                </div>
+
+                <!-- Remarks -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Remarks
+
+                    </label>
+
+                    <input
+                        type="text"
+                        id="remarks"
+                        class="form-control"
+                        placeholder="Enter Remarks">
+
+                </div>
+
+            </div>
+            <!-- =====================================================
+Assessment Results Module
+Part 2
+===================================================== -->
+
+            <div class="row mt-3">
+
+                <div class="col-md-12">
+
+                    <button
+                        id="saveResultBtn"
+                        class="btn btn-primary">
+
+                        Save Result
+
+                    </button>
+
+                    <button
+                        id="clearResultBtn"
+                        type="reset"
+                        class="btn btn-secondary ms-2">
+
+                        Clear
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <br>
+    <!-- =====================================================
+Assessment Results Module
+Part 3
+Assessment Results List
+===================================================== -->
+
+    <div class="card shadow-sm mt-4">
+
+        <div class="card-header d-flex justify-content-between align-items-center">
+
+            <h5 class="mb-0">
+
+                Assessment Results List
+
+            </h5>
+
+            <div class="w-25">
+
+                <input
+                    type="text"
+                    id="searchResult"
+                    class="form-control"
+                    placeholder="Search Result">
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover align-middle">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Student</th>
+
+                            <th>Class</th>
+
+                            <th>Section</th>
+
+                            <th>Subject</th>
+
+                            <th>Assessment</th>
+
+                            <th>Total Marks</th>
+
+                            <th>Marks Obtained</th>
+
+                            <th>Remarks</th>
+
+                            <th width="150">
+
+                                Actions
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="resultTableBody">
+
+                        <tr>
+
+                            <td colspan="10" class="text-center">
+
+                                No Assessment Results Available
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+End Assessment Results Module
+===================================================== -->

@@ -1,0 +1,274 @@
+/* ==========================================
+   GOOGLE FONT
+========================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+
+    height:100vh;
+
+    overflow:hidden;
+
+    background:#F5F7FB;
+
+}
+
+/* ==========================================
+   LEFT PANEL
+========================================== */
+
+.left-panel{
+
+    background:url("../assets/images/login-bg.png");
+
+    background-size:cover;
+
+    background-position:center;
+
+    position:relative;
+
+    animation:zoomBackground 20s infinite alternate;
+
+}
+
+.overlay{
+
+    width:100%;
+
+    height:100%;
+
+    background:linear-gradient(
+
+        rgba(15,23,42,.78),
+
+        rgba(37,99,235,.78)
+
+    );
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.school-info{
+
+    color:white;
+
+    text-align:center;
+
+    animation:fadeUp 1.2s;
+
+}
+
+.logo{
+
+    width:140px;
+
+    margin-bottom:20px;
+
+    filter:drop-shadow(0 10px 15px rgba(0,0,0,.35));
+
+}
+
+.school-info h1{
+
+    font-size:40px;
+
+    font-weight:700;
+
+}
+
+.school-info p{
+
+    margin-top:15px;
+
+    font-size:20px;
+
+    opacity:.9;
+
+}
+
+/* ==========================================
+   RIGHT PANEL
+========================================== */
+
+.login-card{
+
+    width:420px;
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:45px;
+
+    box-shadow:
+
+        0 15px 35px rgba(0,0,0,.15);
+
+    animation:fadeUp 1s;
+
+}
+
+.login-card h2{
+
+    color:#1E3A8A;
+
+    font-weight:700;
+
+}
+
+.login-card p{
+
+    color:#64748B;
+
+    margin-bottom:25px;
+
+}
+
+.login-card label{
+
+    font-weight:600;
+
+    margin-bottom:8px;
+
+}
+
+.form-control{
+
+    height:50px;
+
+    border-radius:12px;
+
+}
+
+.form-control:focus{
+
+    border-color:#2563EB;
+
+    box-shadow:0 0 0 .25rem rgba(37,99,235,.2);
+
+}
+
+.form-select{
+
+    height:50px;
+
+    border-radius:12px;
+
+}
+
+/* ==========================================
+   BUTTON
+========================================== */
+
+.btn-primary{
+
+    height:50px;
+
+    border-radius:12px;
+
+    background:#2563EB;
+
+    border:none;
+
+    font-size:18px;
+
+    transition:.3s;
+
+}
+
+.btn-primary:hover{
+
+    transform:translateY(-3px);
+
+    background:#1D4ED8;
+
+    box-shadow:0 10px 20px rgba(37,99,235,.35);
+
+}
+
+/* ==========================================
+   MESSAGE
+========================================== */
+
+#message{
+
+    font-weight:600;
+
+    min-height:25px;
+
+}
+
+/* ==========================================
+   ANIMATIONS
+========================================== */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+@keyframes zoomBackground{
+
+    from{
+
+        background-size:100%;
+
+    }
+
+    to{
+
+        background-size:110%;
+
+    }
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:991px){
+
+    .left-panel{
+
+        display:none !important;
+
+    }
+
+    .login-card{
+
+        width:95%;
+
+        margin:20px;
+
+    }
+
+}

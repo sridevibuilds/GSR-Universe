@@ -1,0 +1,245 @@
+<!-- =====================================================
+Timetable Module
+Part 1
+===================================================== -->
+
+<div class="container-fluid">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <h4 class="mb-0">
+
+                Timetable Management
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <!-- Class -->
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        Class
+
+                    </label>
+
+                    <select
+                        id="classSelect"
+                        class="form-select">
+
+                        <option value="">
+
+                            Select Class
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Academic Year -->
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        Academic Year
+
+                    </label>
+
+                    <select
+                        id="academicYearSelect"
+                        class="form-select">
+
+                        <option value="">
+
+                            Select Academic Year
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Title -->
+
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label">
+
+                        Timetable Title
+
+                    </label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        class="form-control"
+                        placeholder="Enter Title">
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <!-- Upload PDF -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Timetable PDF
+
+                    </label>
+
+                    <input
+                        type="file"
+                        id="timetablePdf"
+                        class="form-control"
+                        accept=".pdf">
+
+                </div>
+
+                <!-- Remarks -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Remarks
+
+                    </label>
+
+                    <input
+                        type="text"
+                        id="remarks"
+                        class="form-control"
+                        placeholder="Enter Remarks">
+
+                </div>
+
+            </div>
+            <!-- =====================================================
+Timetable Module
+Part 2
+===================================================== -->
+
+            <div class="row mt-3">
+
+                <div class="col-md-12">
+
+                    <button
+                        id="saveTimetableBtn"
+                        class="btn btn-primary">
+
+                        Upload Timetable
+
+                    </button>
+
+                    <button
+                        id="clearTimetableBtn"
+                        type="reset"
+                        class="btn btn-secondary ms-2">
+
+                        Clear
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <br>
+    <!-- =====================================================
+Timetable Module
+Part 3
+===================================================== -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-header d-flex justify-content-between align-items-center">
+
+            <h5 class="mb-0">
+
+                Timetable List
+
+            </h5>
+
+            <input
+                type="text"
+                id="searchTimetable"
+                class="form-control w-25"
+                placeholder="Search Timetable">
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Class</th>
+
+                            <th>Section</th>
+
+                            <th>Academic Year</th>
+
+                            <th>Title</th>
+
+                            <th>PDF</th>
+
+                            <th>Uploaded By</th>
+
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="timetableTableBody">
+
+                        <tr>
+
+                            <td colspan="8" class="text-center">
+
+                                No Timetables Available
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================================
+End Timetable Module
+===================================================== -->

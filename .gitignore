@@ -1,0 +1,13 @@
+# Node
+backend/node_modules/
+backend/.env
+
+# Flutter
+frontend/flutter/.dart_tool/
+frontend/flutter/build/
+frontend/flutter/.flutter-plugins
+frontend/flutter/.flutter-plugins-dependencies
+
+# General
+*.mp4
+*.log
