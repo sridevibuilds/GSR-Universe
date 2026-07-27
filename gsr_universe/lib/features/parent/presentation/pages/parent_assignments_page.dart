@@ -158,6 +158,9 @@ class _ParentAssignmentsPageState extends State<ParentAssignmentsPage> with Sing
     }
 
     if (bytes != null && bytes.isNotEmpty) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      }
       if (isPdf) {
         if (context.mounted) {
           _showPdfViewerModal(context, cleanName, bytes);

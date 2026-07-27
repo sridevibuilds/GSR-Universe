@@ -131,6 +131,7 @@ class ParentTimetablePage extends StatelessWidget {
         }
       } else {
         if (context.mounted) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
           _showPdfViewerModal(context, cleanName, bytes);
         }
       }
