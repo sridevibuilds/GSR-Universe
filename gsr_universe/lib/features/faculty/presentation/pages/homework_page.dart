@@ -221,19 +221,7 @@ class _HomeworkPageState extends State<HomeworkPage> with SingleTickerProviderSt
       }
     }
 
-    // 4. Sample PDF Fallback download
-    if (bytes == null || bytes.isEmpty) {
-      try {
-        final endpoint = "${ApiClient.defaultBaseUrl}/uploads/sample_submission.pdf";
-        final response = await dioClient.get<List<int>>(
-          endpoint,
-          options: Options(responseType: ResponseType.bytes),
-        );
-        if (response.data != null && response.data!.isNotEmpty) {
-          bytes = Uint8List.fromList(response.data!);
-        }
-      } catch (_) {}
-    }
+
 
     if (bytes != null && bytes.isNotEmpty) {
       if (isPdf) {

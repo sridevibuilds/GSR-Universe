@@ -89,9 +89,9 @@ class AssignmentModel {
         parseBool(json['is_submitted']) ||
         parseBool(json['submitted']);
 
-    // Student submission file (ONLY from submission_file / submission_file_path)
-    final String? subFile = json['submission_file']?.toString();
-    String? subPath = json['submission_file_path']?.toString() ?? json['submission_path']?.toString();
+    // Student submission file (ONLY from submission_file / submission_file_path / file_name / file_path)
+    final String? subFile = json['submission_file']?.toString() ?? json['file_name']?.toString();
+    String? subPath = json['submission_file_path']?.toString() ?? json['submission_path']?.toString() ?? json['file_path']?.toString();
     if ((subPath == null || subPath.isEmpty) && subFile != null && subFile.isNotEmpty) {
       subPath = subFile.startsWith('/') || subFile.startsWith('uploads') ? subFile : '/uploads/$subFile';
     }
