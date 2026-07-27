@@ -147,22 +147,13 @@ exports.getAllAssignments = async (req, res) => {
                 a.description,
                 a.submission_date,
                 a.attachment_name,
-                f.faculty_name AS created_by
-
+                a.attachment_path,
+                COALESCE(f.faculty_name, 'Faculty') AS created_by
             FROM assignments a
-
-            JOIN classes c
-                ON a.class_id=c.id
-
-            JOIN academic_years ay
-                ON a.academic_year_id=ay.id
-
-            JOIN subjects s
-                ON a.subject_id=s.id
-
-            JOIN faculty f
-                ON a.created_by=f.id
-
+            LEFT JOIN classes c ON a.class_id = c.id
+            LEFT JOIN academic_years ay ON a.academic_year_id = ay.id
+            LEFT JOIN subjects s ON a.subject_id = s.id
+            LEFT JOIN faculty f ON a.created_by = f.id
             ORDER BY a.id DESC
         `);
 
@@ -235,39 +226,50 @@ exports.updateAssignment=async(req,res)=>{
 
         const {id}=req.params;
 
-        const{
+        const {
+            class_id,
+            academic_year_id,
+            subject_id,
             title,
             description,
-            submission_date
+            submission_date,
+            attachment_name,
+            attachment_path,
+            max_marks
         }=req.body;
 
         const result=await pool.query(
-
-            `
-            UPDATE assignments
+            `UPDATE assignments
             SET
-                title=$1,
-                description=$2,
-                submission_date=$3
-            WHERE id=$4
-            RETURNING *;
-            `,
-
+                class_id=$1,
+                academic_year_id=$2,
+                subject_id=$3,
+                title=$4,
+                description=$5,
+                submission_date=$6,
+                attachment_name=$7,
+                attachment_path=$8,
+                max_marks=$9
+            WHERE id=$10
+            RETURNING *`,
             [
+                class_id,
+                academic_year_id,
+                subject_id,
                 title,
                 description,
                 submission_date,
+                attachment_name,
+                attachment_path,
+                max_marks,
                 id
             ]
-
         );
 
         res.json({
-
             success:true,
             message:"Assignment updated successfully",
             data:result.rows[0]
-
         });
 
     }catch(err){
@@ -275,10 +277,8 @@ exports.updateAssignment=async(req,res)=>{
         console.error(err);
 
         res.status(500).json({
-
             success:false,
             message:err.message
-
         });
 
     }
@@ -295,17 +295,13 @@ exports.deleteAssignment=async(req,res)=>{
         const{id}=req.params;
 
         await pool.query(
-
             "DELETE FROM assignments WHERE id=$1",
             [id]
-
         );
 
         res.json({
-
             success:true,
             message:"Assignment deleted successfully"
-
         });
 
     }catch(err){
@@ -313,10 +309,8 @@ exports.deleteAssignment=async(req,res)=>{
         console.error(err);
 
         res.status(500).json({
-
             success:false,
             message:err.message
-
         });
 
     }
@@ -346,11 +340,11 @@ exports.getAssignmentSubmissions = async (req, res) => {
                 a.title as assignment_title,
                 sub.subject_name
             FROM assignment_submissions asub
-            JOIN student_class_mapping scm ON asub.student_class_mapping_id = scm.id
+            JOIN student_class_mapping scm ON asub.student_class_mapping_id = scm.id AND scm.is_current = true
             JOIN students s ON scm.student_id = s.id
             JOIN assignments a ON asub.assignment_id = a.id
-            JOIN subjects sub ON a.subject_id = sub.id
-            JOIN classes c ON scm.class_id = c.id
+            LEFT JOIN subjects sub ON a.subject_id = sub.id
+            LEFT JOIN classes c ON scm.class_id = c.id
             WHERE 1=1
         `;
         const params = [];
@@ -372,21 +366,10 @@ exports.getAssignmentSubmissions = async (req, res) => {
 
         const result = await pool.query(query, params);
 
-        // Deduplicate submissions so each student appears only once per assignment
-        const seen = new Set();
-        const deduplicatedRows = [];
-        for (const row of result.rows) {
-            const key = `${row.student_id || row.admission_no}_${row.assignment_id}`;
-            if (!seen.has(key)) {
-                seen.add(key);
-                deduplicatedRows.push(row);
-            }
-        }
-
         res.json({
             success: true,
-            count: deduplicatedRows.length,
-            data: deduplicatedRows
+            count: result.rows.length,
+            data: result.rows
         });
     } catch (err) {
         console.error(err);
