@@ -1,88 +1,801 @@
 <!-- =====================================================
-FACULTY MANAGEMENT
+GSR Universe ERP
+Faculty Management
+Part 1/5
 ===================================================== -->
 
 <div class="fade-in">
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- ==============================================
+    PAGE HEADER
+    =============================================== -->
 
-    <div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <h2 class="fw-bold">
+        <div>
 
-            <i class="bi bi-people-fill text-primary"></i>
+            <h2 class="fw-bold mb-1">
 
-            Faculty Management
+                <i class="bi bi-people-fill text-primary"></i>
 
-        </h2>
+                Faculty Management
 
-        <p class="text-muted mb-0">
+            </h2>
 
-            Create, update and manage faculty accounts.
+            <p class="text-muted mb-0">
 
-        </p>
+                Create, edit, disable and manage all faculty accounts.
+
+            </p>
+
+        </div>
+
+        <button
+            class="btn btn-primary px-4"
+            onclick="openFacultyModal()">
+
+            <i class="bi bi-person-plus-fill"></i>
+
+            Add Faculty
+
+        </button>
 
     </div>
 
-    <button
+    <!-- ==============================================
+    SEARCH + FILTER + REFRESH
+    =============================================== -->
 
-        class="btn btn-primary"
-        onclick="openFacultyModal()">
+    <div class="card shadow-sm border-0 mb-4">
 
-        <i class="bi bi-person-plus-fill"></i>
+        <div class="card-body">
 
-        Add Faculty
+            <div class="row g-3 align-items-center">
 
-    </button>
+                <!-- Search -->
 
-</div>
+                <div class="col-lg-5">
 
-<!-- =====================================================
-SEARCH & ACTIONS
-===================================================== -->
+                    <div class="input-group">
 
-<div class="card shadow-sm border-0 mb-4">
+                        <span class="input-group-text">
 
-    <div class="card-body">
+                            <i class="bi bi-search"></i>
 
-        <div class="row g-3">
+                        </span>
 
-            <div class="col-lg-6">
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="facultySearch"
+                            placeholder="Search by Employee ID, Faculty Name, Email or Mobile"
+                            onkeyup="searchFaculty()">
 
-                <div class="input-group">
+                    </div>
 
-                    <span class="input-group-text">
+                </div>
 
-                        <i class="bi bi-search"></i>
+                <!-- Status Filter -->
+
+                <div class="col-lg-3">
+
+                    <select
+                        class="form-select"
+                        id="facultyStatusFilter"
+                        onchange="filterFaculty()">
+
+                        <option value="all">
+
+                            All Faculty
+
+                        </option>
+
+                        <option value="active">
+
+                            Active Faculty
+
+                        </option>
+
+                        <option value="inactive">
+
+                            Disabled Faculty
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- Refresh -->
+
+                <div class="col-lg-2">
+
+                    <button
+                        class="btn btn-outline-primary w-100"
+                        onclick="loadFaculty()">
+
+                        <i class="bi bi-arrow-clockwise"></i>
+
+                        Refresh
+
+                    </button>
+
+                </div>
+
+                <!-- Count -->
+
+                <div class="col-lg-2 text-end">
+
+                    <span
+                        class="badge bg-primary fs-6"
+                        id="facultyCount">
+
+                        0 Faculty
 
                     </span>
-
-                    <input
-
-                        type="text"
-
-                        class="form-control"
-
-                        id="facultySearch"
-
-                        placeholder="Search by Employee ID, Name
-                                                    onkeyup="searchFaculty()">
 
                 </div>
 
             </div>
 
-            <div class="col-lg-6 text-end">
+        </div>
+
+    </div>
+
+    <!-- ==============================================
+    FACULTY TABLE
+    =============================================== -->
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+
+            <h5 class="mb-0">
+
+                Faculty List
+
+            </h5>
+
+            <small class="text-muted">
+
+                GSR Universe ERP
+
+            </small>
+
+        </div>
+
+        <div class="card-body p-0">
+
+            <div class="table-responsive">
+
+                <table
+                    class="table table-hover align-middle mb-0">
+
+                    <thead class="table-primary">
+
+                        <tr>
+
+                            <th width="70">
+
+                                Photo
+
+                            </th>
+
+                            <th>
+
+                                Employee ID
+
+                            </th>
+
+                            <th>
+
+                                Faculty Name
+
+                            </th>
+
+                            <th>
+
+                                Subject
+
+                            </th>
+
+                            <th>
+
+                                Mobile
+
+                            </th>
+
+                            <th>
+
+                                Email
+
+                            </th>
+
+                            <th>
+
+                                Status
+
+                            </th>
+
+                            <th width="220">
+
+                                Actions
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="facultyTableBody">
+                                                <!-- Loading State -->
+
+                        <tr>
+
+                            <td colspan="8" class="text-center py-5">
+
+                                <div class="spinner-border text-primary mb-3"
+                                     role="status">
+
+                                    <span class="visually-hidden">
+
+                                        Loading...
+
+                                    </span>
+
+                                </div>
+
+                                <h6 class="mb-1">
+
+                                    Loading Faculty Records...
+
+                                </h6>
+
+                                <small class="text-muted">
+
+                                    Please wait while we fetch faculty details.
+
+                                </small>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =====================================================
+    ADD / EDIT FACULTY MODAL
+    ===================================================== -->
+
+    <div class="modal fade"
+         id="facultyModal"
+         tabindex="-1">
+
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+
+            <div class="modal-content border-0 shadow-lg">
+
+                <!-- Modal Header -->
+
+                <div class="modal-header bg-primary text-white">
+
+                    <h4
+                        class="modal-title"
+                        id="facultyModalTitle">
+
+                        <i class="bi bi-person-plus-fill me-2"></i>
+
+                        Add Faculty
+
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal">
+
+                    </button>
+
+                </div>
+
+                <!-- Modal Body -->
+
+                <div
+                    class="modal-body"
+                    id="facultyFormContainer">
+
+                    <form id="facultyForm">
+
+                        <div class="row g-4">
+
+                            <!-- Employee ID -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label fw-semibold">
+
+                                    Employee ID
+
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="employeeId"
+                                    placeholder="EMP001">
+
+                            </div>
+
+                            <!-- Faculty Name -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label fw-semibold">
+
+                                    Faculty Name
+
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="facultyName"
+                                    placeholder="Faculty Name">
+
+                            </div>
+
+                            <!-- Email -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label fw-semibold">
+
+                                    Email Address
+
+                                </label>
+
+                                <input
+                                    type="email"
+                                    class="form-control"
+                                    id="facultyEmail"
+                                    placeholder="faculty@gsr.com">
+
+                            </div>
+
+                            <!-- Mobile -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label fw-semibold">
+
+                                    Mobile Number
+
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="facultyMobile"
+                                    placeholder="9876543210">
+
+                            </div>
+
+                            <!-- Subject -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label fw-semibold">
+
+                                    Subject
+
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="facultySubject"
+                                    placeholder="Mathematics">
+
+                            </div>
+
+                            <!-- Role -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label fw-semibold">
+
+                                    Role
+
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    id="facultyRole">
+
+                                    <option value="FACULTY">
+
+                                        FACULTY
+
+                                    </option>
+
+                                    <option value="HOD">
+
+                                        HOD
+
+                                    </option>
+
+                                    <option value="VICE PRINCIPAL">
+
+                                        VICE PRINCIPAL
+
+                                    </option>
+
+                                </select>
+
+                            </div>
+                                                        <!-- Password -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label fw-semibold">
+
+                                    Password
+
+                                </label>
+
+                                <input
+                                    type="password"
+                                    class="form-control"
+                                    id="facultyPassword"
+                                    placeholder="Enter Password">
+
+                            </div>
+
+                            <!-- Confirm Password -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label fw-semibold">
+
+                                    Confirm Password
+
+                                </label>
+
+                                <input
+                                    type="password"
+                                    class="form-control"
+                                    id="facultyConfirmPassword"
+                                    placeholder="Confirm Password">
+
+                            </div>
+
+                            <!-- Status -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label fw-semibold">
+
+                                    Account Status
+
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    id="facultyStatus">
+
+                                    <option value="true" selected>
+
+                                        Active
+
+                                    </option>
+
+                                    <option value="false">
+
+                                        Disabled
+
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <!-- Profile Photo (Future Use) -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label fw-semibold">
+
+                                    Faculty Photo
+                                    <small class="text-muted">
+                                        (Optional)
+                                    </small>
+
+                                </label>
+
+                                <input
+                                    type="file"
+                                    class="form-control"
+                                    id="facultyPhoto"
+                                    accept="image/*">
+
+                            </div>
+
+                            <!-- Information Box -->
+
+                            <div class="col-12">
+
+                                <div class="alert alert-info mb-0">
+
+                                    <i class="bi bi-info-circle-fill me-2"></i>
+
+                                    Faculty accounts created here will be able to
+                                    log in using their registered email and password.
+                                    Disabled faculty members cannot access the ERP
+                                    until they are enabled again.
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <!-- Modal Footer -->
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+
+                        <i class="bi bi-x-circle"></i>
+
+                        Cancel
+
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn btn-success"
+                        id="saveFacultyBtn"
+                        onclick="saveFaculty()">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        Save Faculty
+
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn btn-warning d-none"
+                        id="updateFacultyBtn"
+                        onclick="updateFaculty()">
+
+                        <i class="bi bi-pencil-square"></i>
+
+                        Update Faculty
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+        <!-- =====================================================
+    DELETE FACULTY CONFIRMATION MODAL
+    ===================================================== -->
+
+    <div class="modal fade"
+         id="deleteFacultyModal"
+         tabindex="-1"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content">
+
+                <div class="modal-header bg-danger text-white">
+
+                    <h5 class="modal-title">
+
+                        <i class="bi bi-trash-fill me-2"></i>
+
+                        Delete Faculty
+
+                    </h5>
+
+                    <button
+                        type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal">
+
+                    </button>
+
+                </div>
+
+                <div class="modal-body text-center">
+
+                    <i class="bi bi-exclamation-triangle-fill
+                              text-danger"
+                       style="font-size:60px;"></i>
+
+                    <h4 class="mt-3">
+
+                        Delete Faculty?
+
+                    </h4>
+
+                    <p class="text-muted">
+
+                        This action cannot be undone.
+
+                        The selected faculty account will be
+                        permanently removed from the system.
+
+                    </p>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+
+                        Cancel
+
+                    </button>
+
+                    <button
+                        class="btn btn-danger"
+                        id="confirmDeleteFacultyBtn">
+
+                        <i class="bi bi-trash-fill"></i>
+
+                        Delete
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =====================================================
+    ENABLE / DISABLE FACULTY MODAL
+    ===================================================== -->
+
+    <div class="modal fade"
+         id="statusFacultyModal"
+         tabindex="-1"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content">
+
+                <div class="modal-header bg-warning">
+
+                    <h5 class="modal-title">
+
+                        <i class="bi bi-person-lock me-2"></i>
+
+                        Faculty Status
+
+                    </h5>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+
+                    </button>
+
+                </div>
+
+                <div class="modal-body text-center">
+
+                    <i class="bi bi-person-lock"
+                       style="font-size:60px;color:#F59E0B;"></i>
+
+                    <h4 class="mt-3"
+                        id="facultyStatusTitle">
+
+                        Change Faculty Status
+
+                    </h4>
+
+                    <p
+                        class="text-muted"
+                        id="facultyStatusMessage">
+
+                        Do you want to change this faculty's
+                        account status?
+
+                    </p>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+
+                        Cancel
+
+                    </button>
+
+                    <button
+                        class="btn btn-warning"
+                        id="confirmStatusBtn">
+
+                        Confirm
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =====================================================
+    TOAST NOTIFICATION
+    ===================================================== -->
+
+    <div
+        class="toast-container
+               position-fixed
+               bottom-0
+               end-0
+               p-4">
+
+        <div
+            id="facultyToast"
+            class="toast align-items-center
+                   text-bg-success
+                   border-0"
+            role="alert">
+
+            <div class="d-flex">
+
+                <div
+                    class="toast-body"
+                    id="facultyToastMessage">
+
+                    Faculty Saved Successfully
+
+                </div>
 
                 <button
-
-                    class="btn btn-outline-primary"
-
-                    onclick="loadFaculty()">
-
-                    <i class="bi bi-arrow-clockwise"></i>
-
-                    Refresh
+                    type="button"
+                    class="btn-close
+                           btn-close-white
+                           me-2
+                           m-auto"
+                    data-bs-dismiss="toast">
 
                 </button>
 
@@ -93,129 +806,190 @@ SEARCH & ACTIONS
     </div>
 
 </div>
-
 <!-- =====================================================
-FACULTY TABLE
+FACULTY MANAGEMENT NOTES
 ===================================================== -->
 
-<div class="card shadow-sm border-0">
+<!--
 
-    <div class="card-header bg-white">
+Faculty Management Workflow
 
-        <h5 class="mb-0">
+1. Admin clicks "Add Faculty"
+   ↓
 
-            Faculty List
+2. Faculty Modal Opens
+   ↓
 
-        </h5>
+3. Fill Details
 
-    </div>
+   Employee ID
+   Faculty Name
+   Email
+   Mobile
+   Subject
+   Role
+   Password
+   Status
 
-    <div class="card-body p-0">
+   ↓
 
-        <div class="table-responsive">
+4. Save Faculty
 
-            <table class="table table-hover align-middle mb-0">
+   POST /api/faculty
 
-                <thead class="table-primary">
+   ↓
 
-                    <tr>
+5. Faculty Table Refreshes
 
-                        <th>ID</th>
+-------------------------------------------------------
 
-                        <th>Employee ID</th>
+Edit Faculty
 
-                        <th>Name</th>
+Edit Button
+↓
 
-                        <th>Email</th>
+Faculty Modal Opens
 
-                        <th>Mobile</th>
+↓
 
-                        <th>Subject</th>
+Update Faculty
 
-                        <th>Role</th>
+PUT /api/faculty/:id
 
-                        <th>Status</th>
+↓
 
-                        <th width="180">
+Refresh Table
 
-                            Actions
+-------------------------------------------------------
 
-                        </th>
+Disable Faculty
 
-                    </tr>
+Disable Button
 
-                </thead>
+↓
 
-                <tbody id="facultyTableBody">
+Confirmation Modal
 
-                    <tr>
+↓
 
-                        <td colspan="9" class="text-center p-5">
+PATCH /api/faculty/:id/status
 
-                            <div class="spinner-border text-primary"></div>
+↓
 
-                            <p class="mt-3 mb-0">
+Faculty Status Updated
 
-                                Loading Faculty...
+-------------------------------------------------------
 
-                            </p>
+Delete Faculty
 
-                        </td>
+Delete Button
 
-                    </tr>
+↓
 
-                </tbody>
+Confirmation Modal
 
-            </table>
+↓
 
-        </div>
+DELETE /api/faculty/:id
 
-    </div>
+↓
 
-</div>
+Faculty Removed
+
+-->
 
 <!-- =====================================================
-ADD / EDIT FACULTY MODAL
+EMPTY STATE (Shown by JavaScript when no faculty exists)
 ===================================================== -->
 
-<div class="modal fade"
+<template id="emptyFacultyTemplate">
 
-     id="facultyModal"
+    <tr>
 
-     tabindex="-1">
+        <td colspan="8" class="text-center py-5">
 
-    <div class="modal-dialog modal-lg">
+            <i class="bi bi-people"
+               style="font-size:65px;color:#CBD5E1;"></i>
 
-        <div class="modal-content">
+            <h4 class="mt-3">
 
-            <div class="modal-header">
+                No Faculty Found
 
-                <h5 id="facultyModalTitle">
+            </h4>
 
-                    Add Faculty
+            <p class="text-muted">
 
-                </h5>
+                Click <strong>Add Faculty</strong> to create the
+                first faculty account.
 
-                <button
+            </p>
 
-                    class="btn-close"
+        </td>
 
-                    data-bs-dismiss="modal">
+    </tr>
 
-                </button>
+</template>
 
-            </div>
+<!-- =====================================================
+LOADING TEMPLATE
+===================================================== -->
 
-            <div class="modal-body" id="facultyFormContainer">
+<template id="loadingFacultyTemplate">
 
-                <!-- faculty.js will generate the form here -->
+    <tr>
 
-            </div>
+        <td colspan="8" class="text-center py-5">
 
-        </div>
+            <div class="spinner-border text-primary"></div>
+
+            <p class="mt-3">
+
+                Loading Faculty...
+
+            </p>
+
+        </td>
+
+    </tr>
+
+</template>
+
+<!-- =====================================================
+ACTION BUTTON TEMPLATE
+===================================================== -->
+
+<template id="facultyActionButtons">
+
+    <div class="d-flex justify-content-center gap-2">
+
+        <button
+            class="btn btn-sm btn-warning"
+            title="Edit Faculty">
+
+            <i class="bi bi-pencil-square"></i>
+
+        </button>
+
+        <button
+            class="btn btn-sm btn-secondary"
+            title="Enable / Disable">
+
+            <i class="bi bi-person-lock"></i>
+
+        </button>
+
+        <button
+            class="btn btn-sm btn-danger"
+            title="Delete Faculty">
+
+            <i class="bi bi-trash-fill"></i>
+
+        </button>
 
     </div>
 
-</div>
+</template>
 
-</div>
+<!-- =====================================================
+END OF FACULTY MANAGEMENT MODULE
+===================================================== -->

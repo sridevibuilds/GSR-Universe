@@ -39,10 +39,29 @@ exports.createProgressCard = async (req, res) => {
             ]
         );
 
+        const newProgressCard = result.rows[0];
+
+        // Insert single notification for mapped student
+        if (student_class_mapping_id) {
+            try {
+                const scmRes = await pool.query("SELECT student_id, class_id FROM student_class_mapping WHERE id = $1", [student_class_mapping_id]);
+                const targetStudentId = scmRes.rows.length > 0 ? scmRes.rows[0].student_id : null;
+                const targetClassId = scmRes.rows.length > 0 ? scmRes.rows[0].class_id : null;
+
+                await pool.query(
+                    `INSERT INTO public.parent_notifications (student_id, class_id, type, title, message, reference_id)
+                     VALUES ($1::integer, $2::integer, 'PROGRESS_CARD', $3::text, $4::text, $5::integer)`,
+                    [targetStudentId, targetClassId, `New Progress Card Uploaded`, remarks || 'Academic progress card is now available.', parseInt(newProgressCard.id, 10)]
+                );
+            } catch (e) {
+                console.error("Failed to insert parent progress card notification:", e);
+            }
+        }
+
         res.status(201).json({
-            success:true,
-            message:"Progress Card uploaded successfully",
-            data:result.rows[0]
+            success: true,
+            message: "Progress Card uploaded successfully",
+            data: newProgressCard
         });
 
     } catch(err){
@@ -70,6 +89,7 @@ exports.getAllProgressCards = async (req,res)=>{
                 pc.id,
                 s.student_name,
                 c.class_name,
+                c.section,
                 ay.year_name,
                 pc.file_name,
                 pc.file_path,

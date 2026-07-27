@@ -79,18 +79,28 @@ router.put(
 // ==========================================
 // DELETE STUDENT
 // ==========================================
-
 router.delete(
-
     "/delete/:id",
-
     verifyToken,
-
     roleMiddleware("FACULTY"),
-
     studentController.deleteStudent
-
 );
 
+// ==========================================
+// PROMOTE STUDENTS
+// ==========================================
+router.post(
+    "/promote",
+    verifyToken,
+    roleMiddleware("FACULTY", "ADMIN"),
+    studentController.promoteStudents
+);
+
+router.post(
+    "/academic-years",
+    verifyToken,
+    roleMiddleware("FACULTY", "ADMIN"),
+    studentController.createAcademicYear
+);
 
 module.exports = router;

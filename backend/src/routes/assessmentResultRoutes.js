@@ -1,21 +1,21 @@
+// Module 9 Route Security - Assessment Result Routes
+
 const express = require("express");
 const router = express.Router();
-
 const assessmentResultController = require("../controllers/assessmentResultController");
+const verifyToken = require("../middleware/authMiddleware");
+const roleMiddleware = require("../middleware/roleMiddleware");
 
-// Create Assessment Result
-router.post("/", assessmentResultController.createAssessmentResult);
+// Enforce token verification globally
+router.use(verifyToken);
 
-// Get All Assessment Results
+// Create, Update, Delete restricted to Faculty and Admin
+router.post("/", roleMiddleware("FACULTY", "ADMIN"), assessmentResultController.createAssessmentResult);
+router.put("/:id", roleMiddleware("FACULTY", "ADMIN"), assessmentResultController.updateAssessmentResult);
+router.delete("/:id", roleMiddleware("FACULTY", "ADMIN"), assessmentResultController.deleteAssessmentResult);
+
+// Fetching allowed for all authenticated users
 router.get("/", assessmentResultController.getAllAssessmentResults);
-
-// Get Assessment Result By ID
 router.get("/:id", assessmentResultController.getAssessmentResultById);
-
-// Update Assessment Result
-router.put("/:id", assessmentResultController.updateAssessmentResult);
-
-// Delete Assessment Result
-router.delete("/:id", assessmentResultController.deleteAssessmentResult);
 
 module.exports = router;

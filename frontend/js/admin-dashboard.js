@@ -1,14 +1,19 @@
 /* =====================================================
    GSR Universe ERP
    Admin Dashboard
-   Part 1
 ===================================================== */
 
-// ==========================================
-// TOKEN
-// ==========================================
+// =====================================================
+// GLOBAL VARIABLES
+// =====================================================
 
 const TOKEN = localStorage.getItem("token");
+
+const ADMIN = JSON.parse(
+
+    localStorage.getItem("admin")
+
+);
 
 if (!TOKEN) {
 
@@ -16,71 +21,55 @@ if (!TOKEN) {
 
 }
 
-// ==========================================
-// USER
-// ==========================================
-
-const USER = JSON.parse(
-
-    localStorage.getItem("user")
-
-);
-
-// ==========================================
-// API
-// ==========================================
-
-const API_BASE = "http://localhost:5000/api";
-
-// ==========================================
-// INITIALIZATION
-// ==========================================
+// =====================================================
+// INITIALIZE DASHBOARD
+// =====================================================
 
 document.addEventListener(
 
     "DOMContentLoaded",
 
-    () => {
-
-        loadAdmin();
-
-        loadDashboard();
-
-    }
+    initializeDashboard
 
 );
 
-// ==========================================
-// LOAD ADMIN DETAILS
-// ==========================================
+function initializeDashboard() {
 
-function loadAdmin() {
+    loadAdmin();
 
-    if (!USER) return;
+    loadDashboard();
 
-    const adminName = document.getElementById(
-
-        "adminName"
-
-    );
-
-    if (adminName) {
-
-        adminName.innerHTML =
-
-            USER.admin_name ||
-
-            USER.name ||
-
-            "Administrator";
-
-    }
+    updateSidebar("dashboard");
 
 }
 
-// ==========================================
+// =====================================================
+// LOAD ADMIN DETAILS
+// =====================================================
+
+function loadAdmin() {
+
+    const adminName =
+
+        document.getElementById(
+
+            "adminName"
+
+        );
+
+    if (!adminName) return;
+
+    adminName.textContent =
+
+        ADMIN?.admin_name ||
+
+        "Administrator";
+
+}
+
+// =====================================================
 // LOAD DASHBOARD
-// ==========================================
+// =====================================================
 
 async function loadDashboard() {
 
@@ -88,9 +77,9 @@ async function loadDashboard() {
 
 }
 
-// ==========================================
+// =====================================================
 // LOAD FACULTY COUNT
-// ==========================================
+// =====================================================
 
 async function loadFacultyCount() {
 
@@ -98,11 +87,9 @@ async function loadFacultyCount() {
 
         const response = await fetch(
 
-            API_BASE + "/faculty",
+            API.faculty,
 
             {
-
-                method: "GET",
 
                 headers: {
 
@@ -118,89 +105,102 @@ async function loadFacultyCount() {
 
         const result = await response.json();
 
+        if (!response.ok) {
+
+            throw new Error(
+
+                result.message
+
+            );
+
+        }
+
         const faculty =
 
             result.faculty || [];
 
-        const totalFaculty =
+        const total = faculty.length;
 
-            document.getElementById(
+        const active = faculty.filter(
 
-                "totalFaculty"
+            item => item.is_active
 
-            );
+        ).length;
 
-        const activeFaculty =
+        const disabled =
 
-            document.getElementById(
+            total - active;
 
-                "activeFaculty"
+        document.getElementById(
 
-            );
+            "totalFaculty"
 
-        const disabledFaculty =
+        ).textContent = total;
 
-            document.getElementById(
+        document.getElementById(
 
-                "disabledFaculty"
+            "activeFaculty"
 
-            );
+        ).textContent = active;
 
-        if (totalFaculty)
+        document.getElementById(
 
-            totalFaculty.innerHTML =
+            "disabledFaculty"
 
-                faculty.length;
-
-        let active = 0;
-
-        let inactive = 0;
-
-        faculty.forEach(f => {
-
-            if (f.is_active)
-
-                active++;
-
-            else
-
-                inactive++;
-
-        });
-
-        if (activeFaculty)
-
-            activeFaculty.innerHTML = active;
-
-        if (disabledFaculty)
-
-            disabledFaculty.innerHTML = inactive;
+        ).textContent = disabled;
 
     }
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+
+            "Dashboard Error:",
+
+            error
+
+        );
 
     }
 
 }
 
-// ==========================================
+// =====================================================
 // LOAD MODULE
-// ==========================================
+// =====================================================
+// =====================================================
+// LOAD MODULE
+// =====================================================
 
 async function loadModule(moduleName) {
 
     try {
 
+        const container = document.getElementById(
+
+            "moduleContainer"
+
+        );
+
+        container.innerHTML = `
+
+<div class="text-center py-5">
+
+    <div class="spinner-border text-primary"></div>
+
+    <p class="mt-3">
+
+        Loading ${moduleName}...
+
+    </p>
+
+</div>
+
+`;
+
         const response = await fetch(
 
-            "modules/" +
-
-            moduleName +
-
-            ".html"
+            `modules/${moduleName}.html`
 
         );
 
@@ -208,23 +208,23 @@ async function loadModule(moduleName) {
 
             throw new Error(
 
-                "Module not found"
+                "Unable to load module HTML."
 
             );
 
         }
 
-        const html =
+        container.innerHTML =
 
             await response.text();
 
-        document.getElementById(
+        await loadModuleScript(
 
-            "moduleContainer"
+            moduleName
 
-        ).innerHTML = html;
+        );
 
-        loadModuleScript(moduleName);
+        updateSidebar(moduleName);
 
     }
 
@@ -238,11 +238,19 @@ async function loadModule(moduleName) {
 
         ).innerHTML = `
 
-<div class="alert alert-danger mt-4">
+<div class="alert alert-danger">
 
-<h5>Unable to Load Module</h5>
+    <h5>
 
-<p>${moduleName}</p>
+        Failed to load module
+
+    </h5>
+
+    <p>
+
+        ${error.message}
+
+    </p>
 
 </div>
 
@@ -252,93 +260,440 @@ async function loadModule(moduleName) {
 
 }
 
-// ==========================================
-// LOAD MODULE JS
-// ==========================================
+// =====================================================
+// LOAD MODULE SCRIPT
+// =====================================================
 
 function loadModuleScript(moduleName) {
 
-    const oldScript = document.getElementById(
+    return new Promise((resolve, reject) => {
 
-        "dynamicModuleScript"
+        const oldScript = document.getElementById(
 
-    );
+            "dynamicModuleScript"
 
-    if (oldScript) {
+        );
 
-        oldScript.remove();
+        if (oldScript) {
 
-    }
+            oldScript.remove();
 
-    const script =
+        }
 
-        document.createElement("script");
+        const script = document.createElement(
 
-    script.id =
+            "script"
 
-        "dynamicModuleScript";
+        );
 
-    script.src =
+        script.id =
 
-        "js/" +
+            "dynamicModuleScript";
 
-        moduleName +
+        script.src =
 
-        ".js?v=" +
+            `js/${moduleName}.js?v=${Date.now()}`;
 
-        new Date().getTime();
+        script.onload = () => {
 
-    document.body.appendChild(script);
+            console.log(
+
+                moduleName +
+
+                " loaded successfully."
+
+            );
+
+            resolve();
+
+        };
+
+        script.onerror = () => {
+
+            reject(
+
+                new Error(
+
+                    "Unable to load JavaScript."
+
+                )
+
+            );
+
+        };
+
+        document.body.appendChild(
+
+            script
+
+        );
+
+    });
 
 }
 
-console.log("✅ Admin Dashboard Part 1 Loaded");
-/* =====================================================
-   Admin Dashboard
-   Part 2
-===================================================== */
-
-// ==========================================
+// =====================================================
 // SHOW DASHBOARD
-// ==========================================
+// =====================================================
 
 function showDashboard() {
 
-    const moduleContainer = document.getElementById("moduleContainer");
+    const container = document.getElementById(
 
-    if (moduleContainer) {
+        "moduleContainer"
 
-        moduleContainer.innerHTML = "";
+    );
+
+    if (container) {
+
+        container.innerHTML = "";
 
     }
 
     loadDashboard();
 
+    updateSidebar(
+
+        "dashboard"
+
+    );
+
 }
 
-// ==========================================
-// SIDEBAR ACTIVE MENU
-// ==========================================
+// =====================================================
+// UPDATE SIDEBAR
+// =====================================================
 
-document.addEventListener("click", function (e) {
+function updateSidebar(activeModule) {
 
-    const item = e.target.closest(".sidebar-menu li");
+    document
 
-    if (!item) return;
+        .querySelectorAll(
 
-    document.querySelectorAll(".sidebar-menu li").forEach(menu => {
+            ".sidebar-menu li"
 
-        menu.classList.remove("active");
+        )
 
-    });
+        .forEach(item =>
 
-    item.classList.add("active");
+            item.classList.remove(
 
-});
+                "active"
 
-// ==========================================
-// QUICK ACTIONS
-// ==========================================
+            )
+
+        );
+
+    const target = document.querySelector(
+
+        `.sidebar-menu li[data-module="${activeModule}"]`
+
+    );
+
+    if (target) {
+
+        target.classList.add(
+
+            "active"
+
+        );
+
+    }
+
+}
+// =====================================================
+// LOGOUT
+// =====================================================
+
+function logout() {
+
+    if (
+
+        !confirm(
+
+            "Are you sure you want to logout?"
+
+        )
+
+    ) {
+
+        return;
+
+    }
+
+    localStorage.clear();
+
+    window.location.href = "index.html";
+
+}
+
+// =====================================================
+// REFRESH DASHBOARD
+// =====================================================
+
+async function refreshDashboard() {
+
+    try {
+
+        await loadFacultyCount();
+
+    }
+
+    catch (error) {
+
+        console.error(
+
+            "Refresh failed:",
+
+            error
+
+        );
+
+    }
+
+}
+
+// =====================================================
+// DASHBOARD AUTO REFRESH
+// =====================================================
+
+let refreshTimer = null;
+
+function startAutoRefresh() {
+
+    stopAutoRefresh();
+
+    refreshTimer = setInterval(
+
+        refreshDashboard,
+
+        60000
+
+    );
+
+}
+
+function stopAutoRefresh() {
+
+    if (refreshTimer) {
+
+        clearInterval(
+
+            refreshTimer
+
+        );
+
+        refreshTimer = null;
+
+    }
+
+}
+
+// =====================================================
+// WINDOW EVENTS
+// =====================================================
+
+window.addEventListener(
+
+    "focus",
+
+    refreshDashboard
+
+);
+
+document.addEventListener(
+
+    "visibilitychange",
+
+    () => {
+
+        if (
+
+            document.visibilityState ===
+
+            "visible"
+
+        ) {
+
+            refreshDashboard();
+
+        }
+
+    }
+
+);
+
+// =====================================================
+// START AUTO REFRESH
+// =====================================================
+
+startAutoRefresh();
+// =====================================================
+// FACULTY MODULE CALLBACKS
+// =====================================================
+
+function onFacultyCreated() {
+
+    refreshDashboard();
+
+}
+
+function onFacultyUpdated() {
+
+    refreshDashboard();
+
+}
+
+function onFacultyDeleted() {
+
+    refreshDashboard();
+
+}
+
+function onFacultyStatusChanged() {
+
+    refreshDashboard();
+
+}
+
+// =====================================================
+// LOADING OVERLAY
+// =====================================================
+
+function showLoading() {
+
+    const loading = document.getElementById(
+
+        "loadingModal"
+
+    );
+
+    if (!loading) return;
+
+    const modal = new bootstrap.Modal(
+
+        loading,
+
+        {
+
+            backdrop: "static",
+
+            keyboard: false
+
+        }
+
+    );
+
+    modal.show();
+
+}
+
+function hideLoading() {
+
+    const loading = document.getElementById(
+
+        "loadingModal"
+
+    );
+
+    if (!loading) return;
+
+    const modal = bootstrap.Modal.getInstance(
+
+        loading
+
+    );
+
+    if (modal) {
+
+        modal.hide();
+
+    }
+
+}
+
+// =====================================================
+// DASHBOARD ERROR
+// =====================================================
+
+function showDashboardError(message) {
+
+    const container = document.getElementById(
+
+        "moduleContainer"
+
+    );
+
+    if (!container) return;
+
+    container.innerHTML = `
+
+<div class="alert alert-danger mt-4">
+
+    <h5>
+
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+
+        Error
+
+    </h5>
+
+    <p class="mb-0">
+
+        ${message}
+
+    </p>
+
+</div>
+
+`;
+
+}
+
+// =====================================================
+// GLOBAL FUNCTIONS
+// =====================================================
+
+window.loadModule = loadModule;
+
+window.showDashboard = showDashboard;
+
+window.refreshDashboard = refreshDashboard;
+
+window.logout = logout;
+
+window.showLoading = showLoading;
+
+window.hideLoading = hideLoading;
+
+window.showDashboardError = showDashboardError;
+
+window.onFacultyCreated = onFacultyCreated;
+
+window.onFacultyUpdated = onFacultyUpdated;
+
+window.onFacultyDeleted = onFacultyDeleted;
+
+window.onFacultyStatusChanged = onFacultyStatusChanged;
+// =====================================================
+// CLEANUP EVENTS
+// =====================================================
+
+window.addEventListener(
+
+    "beforeunload",
+
+    () => {
+
+        stopAutoRefresh();
+
+    }
+
+);
+
+// =====================================================
+// MODULE NAVIGATION
+// =====================================================
 
 function openFacultyManagement() {
 
@@ -346,116 +701,96 @@ function openFacultyManagement() {
 
 }
 
-window.openFacultyManagement = openFacultyManagement;
+window.openFacultyManagement =
 
-// ==========================================
-// LOGOUT
-// ==========================================
+    openFacultyManagement;
 
-function logout() {
+// =====================================================
+// SIDEBAR NAVIGATION
+// =====================================================
 
-    if (!confirm("Are you sure you want to logout?")) {
+document.addEventListener(
 
-        return;
+    "click",
 
-    }
+    function (event) {
 
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    localStorage.removeItem("admin");
-    localStorage.removeItem("faculty");
-    localStorage.removeItem("parent");
-    localStorage.removeItem("user_id");
-    localStorage.removeItem("faculty_id");
+        const item = event.target.closest(
 
-    window.location.href = "index.html";
+            ".sidebar-menu li"
 
-}
+        );
 
-window.logout = logout;
+        if (!item) return;
 
-// ==========================================
-// REFRESH DASHBOARD
-// ==========================================
+        document
 
-async function refreshDashboard() {
+            .querySelectorAll(
 
-    await loadDashboard();
+                ".sidebar-menu li"
 
-}
+            )
 
-window.refreshDashboard = refreshDashboard;
+            .forEach(menu =>
 
-// ==========================================
-// AUTO REFRESH
-// ==========================================
+                menu.classList.remove(
 
-setInterval(() => {
+                    "active"
 
-    refreshDashboard();
+                )
 
-}, 60000);
+            );
 
-console.log("✅ Admin Dashboard Part 2 Loaded");
-/* =====================================================
-   Admin Dashboard
-   Part 3
-===================================================== */
+        item.classList.add(
 
-// ==========================================
-// QUICK ACTION BUTTONS
-// ==========================================
+            "active"
 
-document.addEventListener("DOMContentLoaded", () => {
-
-    const addBtn = document.getElementById("addFacultyBtn");
-    const editBtn = document.getElementById("editFacultyBtn");
-    const deleteBtn = document.getElementById("deleteFacultyBtn");
-
-    if (addBtn) {
-
-        addBtn.onclick = () => {
-
-            loadModule("faculty");
-
-        };
+        );
 
     }
 
-    if (editBtn) {
+);
 
-        editBtn.onclick = () => {
+// =====================================================
+// PAGE READY
+// =====================================================
 
-            loadModule("faculty");
+initializeDashboard();
 
-        };
+// =====================================================
+// DEBUG
+// =====================================================
 
-    }
+console.group(
 
-    if (deleteBtn) {
+    "🚀 GSR Universe ERP"
 
-        deleteBtn.onclick = () => {
+);
 
-            loadModule("faculty");
+console.log(
 
-        };
+    "Admin Dashboard Ready"
 
-    }
+);
 
-});
+console.log(
 
-// ==========================================
-// GLOBAL FUNCTIONS
-// ==========================================
+    "Admin :",
 
-window.loadModule = loadModule;
-window.showDashboard = showDashboard;
-window.logout = logout;
-window.refreshDashboard = refreshDashboard;
-window.openFacultyManagement = openFacultyManagement;
+    ADMIN
 
-// ==========================================
-// READY
-// ==========================================
+);
 
-console.log("✅ GSR Universe Admin Dashboard Ready");
+console.log(
+
+    "API :",
+
+    API.faculty
+
+);
+
+console.groupEnd();
+
+// =====================================================
+// END
+// =====================================================

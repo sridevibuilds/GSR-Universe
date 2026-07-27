@@ -10,7 +10,7 @@ const roleMiddleware = require("../middleware/roleMiddleware");
 
 
 // ==========================================
-// MARK ATTENDANCE
+// MARK & SCAN ATTENDANCE
 // ==========================================
 
 router.post(
@@ -22,6 +22,18 @@ router.post(
     roleMiddleware("FACULTY"),
 
     attendanceController.markAttendance
+
+);
+
+router.post(
+
+    "/scan",
+
+    verifyToken,
+
+    roleMiddleware("FACULTY"),
+
+    attendanceController.scanBarcodeAttendance
 
 );
 
@@ -44,7 +56,7 @@ router.get(
 
 
 // ==========================================
-// GET ATTENDANCE BY STUDENT
+// GET ATTENDANCE BY STUDENT (Raw list)
 // ==========================================
 
 router.get(
@@ -59,7 +71,34 @@ router.get(
 
 
 // ==========================================
-// UPDATE ATTENDANCE
+// REPORTS & ANALYTICS (Class & Student Summaries)
+// ==========================================
+
+router.get(
+
+    "/report/class/:classId",
+
+    verifyToken,
+
+    roleMiddleware("FACULTY", "ADMIN"),
+
+    attendanceController.getClassAttendanceReport
+
+);
+
+router.get(
+
+    "/report/student/:studentId",
+
+    verifyToken,
+
+    attendanceController.getStudentAttendanceSummary
+
+);
+
+
+// ==========================================
+// UPDATE & DELETE ATTENDANCE
 // ==========================================
 
 router.put(
@@ -74,11 +113,6 @@ router.put(
 
 );
 
-
-// ==========================================
-// DELETE ATTENDANCE
-// ==========================================
-
 router.delete(
 
     "/delete/:id",
@@ -90,5 +124,6 @@ router.delete(
     attendanceController.deleteAttendance
 
 );
+
 
 module.exports = router;

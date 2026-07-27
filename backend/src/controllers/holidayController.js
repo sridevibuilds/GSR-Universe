@@ -1,5 +1,14 @@
 const pool = require("../config/db");
 
+const normalizeHolidayType = (type) => {
+    if (!type) return 'General';
+    const lower = type.toString().trim().toLowerCase();
+    if (lower.includes('festiv')) return 'Festival';
+    if (lower.includes('vacat') || lower.includes('summer') || lower.includes('winter')) return 'Vacation';
+    if (lower.includes('emerg')) return 'Emergency';
+    return 'General';
+};
+
 // ==========================================
 // CREATE HOLIDAY
 // ==========================================
@@ -7,7 +16,7 @@ exports.createHoliday = async (req, res) => {
 
     try {
 
-        const {
+        let {
             holiday_name,
             description,
             start_date,
@@ -16,6 +25,10 @@ exports.createHoliday = async (req, res) => {
             created_by,
             target_scope
         } = req.body;
+
+        // Map target scope to constraint values: 'ALL', 'CLASS'
+        const upperScope = (target_scope || 'ALL').toUpperCase() === 'CLASS' ? 'CLASS' : 'ALL';
+        const cleanType = normalizeHolidayType(holiday_type);
 
         const result = await pool.query(
             `
@@ -37,16 +50,29 @@ exports.createHoliday = async (req, res) => {
                 description,
                 start_date,
                 end_date,
-                holiday_type,
-                created_by,
-                target_scope
+                cleanType,
+                created_by || 1,
+                upperScope
             ]
         );
+
+        const newHoliday = result.rows[0];
+
+        // Insert single notification for all students
+        try {
+            await pool.query(
+                `INSERT INTO public.parent_notifications (student_id, class_id, type, title, message, reference_id)
+                 VALUES (NULL, NULL, 'HOLIDAY', $1::text, $2::text, $3::integer)`,
+                [`Holiday: ${holiday_name}`, description || `Holiday declared from ${start_date} to ${end_date}`, parseInt(newHoliday.id, 10)]
+            );
+        } catch (e) {
+            console.error("Failed to insert parent holiday notification:", e);
+        }
 
         res.status(201).json({
             success: true,
             message: "Holiday created successfully",
-            data: result.rows[0]
+            data: newHoliday
         });
 
     } catch (err) {
@@ -139,7 +165,7 @@ exports.updateHoliday = async (req, res) => {
 
         const { id } = req.params;
 
-        const {
+        let {
             holiday_name,
             description,
             start_date,
@@ -147,6 +173,9 @@ exports.updateHoliday = async (req, res) => {
             holiday_type,
             target_scope
         } = req.body;
+
+        // Map target scope to constraint values: 'ALL', 'CLASS'
+        const upperScope = target_scope ? ((target_scope.toUpperCase() === 'CLASS' ? 'CLASS' : 'ALL')) : 'ALL';
 
         const result = await pool.query(
             `
@@ -166,8 +195,8 @@ exports.updateHoliday = async (req, res) => {
                 description,
                 start_date,
                 end_date,
-                holiday_type,
-                target_scope,
+                holiday_type || 'General',
+                upperScope,
                 id
             ]
         );

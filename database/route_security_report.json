@@ -1,0 +1,239 @@
+[
+    {
+        "file": "adminRoutes.js",
+        "hasVerifyToken": false,
+        "hasRoleMiddleware": false,
+        "totalRoutes": 1,
+        "routes": [
+            "router.post(\"/login\", adminLogin);"
+        ]
+    },
+    {
+        "file": "announcementRoutes.js",
+        "hasVerifyToken": false,
+        "hasRoleMiddleware": false,
+        "totalRoutes": 5,
+        "routes": [
+            "router.post(\"/\", announcementController.createAnnouncement);",
+            "router.get(\"/\", announcementController.getAllAnnouncements);",
+            "router.get(\"/:id\", announcementController.getAnnouncementById);",
+            "router.put(\"/:id\", announcementController.updateAnnouncement);",
+            "router.delete(\"/:id\", announcementController.deleteAnnouncement);"
+        ]
+    },
+    {
+        "file": "assessmentResultRoutes.js",
+        "hasVerifyToken": false,
+        "hasRoleMiddleware": false,
+        "totalRoutes": 5,
+        "routes": [
+            "router.post(\"/\", assessmentResultController.createAssessmentResult);",
+            "router.get(\"/\", assessmentResultController.getAllAssessmentResults);",
+            "router.get(\"/:id\", assessmentResultController.getAssessmentResultById);",
+            "router.put(\"/:id\", assessmentResultController.updateAssessmentResult);",
+            "router.delete(\"/:id\", assessmentResultController.deleteAssessmentResult);"
+        ]
+    },
+    {
+        "file": "assessmentRoutes.js",
+        "hasVerifyToken": false,
+        "hasRoleMiddleware": false,
+        "totalRoutes": 5,
+        "routes": [
+            "router.post(\"/\", assessmentController.createAssessment);",
+            "router.get(\"/\", assessmentController.getAllAssessments);",
+            "router.get(\"/:id\", assessmentController.getAssessmentById);",
+            "router.put(\"/:id\", assessmentController.updateAssessment);",
+            "router.delete(\"/:id\", assessmentController.deleteAssessment);"
+        ]
+    },
+    {
+        "file": "assignmentRoutes.js",
+        "hasVerifyToken": false,
+        "hasRoleMiddleware": false,
+        "totalRoutes": 5,
+        "routes": [
+            "router.post(\"/\",assignmentController.createAssignment);",
+            "router.get(\"/\",assignmentController.getAllAssignments);",
+            "router.get(\"/:id\",assignmentController.getAssignmentById);",
+            "router.put(\"/:id\",assignmentController.updateAssignment);",
+            "router.delete(\"/:id\",assignmentController.deleteAssignment);"
+        ]
+    },
+    {
+        "file": "attendanceRoutes.js",
+        "hasVerifyToken": true,
+        "hasRoleMiddleware": true,
+        "totalRoutes": 5,
+        "routes": [
+            "router.post(",
+            "router.get(",
+            "router.get(",
+            "router.put(",
+            "router.delete("
+        ]
+    },
+    {
+        "file": "authRoutes.js",
+        "hasVerifyToken": false,
+        "hasRoleMiddleware": false,
+        "totalRoutes": 4,
+        "routes": [
+            "router.post(\"/admin/login\", adminLogin);",
+            "router.post(\"/faculty/login\", facultyLogin);",
+            "router.post(\"/parent/send-otp\", parentSendOTP);",
+            "router.post(\"/parent/verify-otp\", parentVerifyOTP);"
+        ]
+    },
+    {
+        "file": "eventRoutes.js",
+        "hasVerifyToken": false,
+        "hasRoleMiddleware": false,
+        "totalRoutes": 5,
+        "routes": [
+            "router.post(\"/\", eventController.createEvent);",
+            "router.get(\"/\", eventController.getAllEvents);",
+            "router.get(\"/:id\", eventController.getEventById);",
+            "router.put(\"/:id\", eventController.updateEvent);",
+            "router.delete(\"/:id\", eventController.deleteEvent);"
+        ]
+    },
+    {
+        "file": "facultyRoutes.js",
+        "hasVerifyToken": true,
+        "hasRoleMiddleware": true,
+        "totalRoutes": 6,
+        "routes": [
+            "router.post(",
+            "router.get(",
+            "router.get(",
+            "router.get(",
+            "router.put(",
+            "router.delete("
+        ]
+    },
+    {
+        "file": "feeRoutes.js",
+        "hasVerifyToken": false,
+        "hasRoleMiddleware": false,
+        "totalRoutes": 5,
+        "routes": [
+            "router.post(\"/\", feeController.createFee);",
+            "router.get(\"/\", feeController.getAllFees);",
+            "router.get(\"/:id\", feeController.getFeeById);",
+            "router.put(\"/:id\", feeController.updateFee);",
+            "router.delete(\"/:id\", feeController.deleteFee);"
+        ]
+    },
+    {
+        "file": "holidayRoutes.js",
+        "hasVerifyToken": false,
+        "hasRoleMiddleware": false,
+        "totalRoutes": 5,
+        "routes": [
+            "router.post(\"/\", holidayController.createHoliday);",
+            "router.get(\"/\", holidayController.getAllHolidays);",
+            "router.get(\"/:id\", holidayController.getHolidayById);",
+            "router.put(\"/:id\", holidayController.updateHoliday);",
+            "router.delete(\"/:id\", holidayController.deleteHoliday);"
+        ]
+    },
+    {
+        "file": "homeworkRoutes.js",
+        "hasVerifyToken": false,
+        "hasRoleMiddleware": false,
+        "totalRoutes": 5,
+        "routes": [
+            "router.post(\"/\",homeworkController.createHomework);",
+            "router.get(\"/\",homeworkController.getAllHomework);",
+            "router.get(\"/:id\",homeworkController.getHomeworkById);",
+            "router.put(\"/:id\",homeworkController.updateHomework);",
+            "router.delete(\"/:id\",homeworkController.deleteHomework);"
+        ]
+    },
+    {
+        "file": "noticeBoardRoutes.js",
+        "hasVerifyToken": false,
+        "hasRoleMiddleware": false,
+        "totalRoutes": 5,
+        "routes": [
+            "router.post(\"/\", noticeBoardController.createNotice);",
+            "router.get(\"/\", noticeBoardController.getAllNotices);",
+            "router.get(\"/:id\", noticeBoardController.getNoticeById);",
+            "router.put(\"/:id\", noticeBoardController.updateNotice);",
+            "router.delete(\"/:id\", noticeBoardController.deleteNotice);"
+        ]
+    },
+    {
+        "file": "parentRoutes.js",
+        "hasVerifyToken": true,
+        "hasRoleMiddleware": false,
+        "totalRoutes": 12,
+        "routes": [
+            "router.get(",
+            "router.get(",
+            "router.get(",
+            "router.get(",
+            "router.get(",
+            "router.get(",
+            "router.get(",
+            "router.get(",
+            "router.get(",
+            "router.get(",
+            "router.get(",
+            "router.get("
+        ]
+    },
+    {
+        "file": "progressCardRoutes.js",
+        "hasVerifyToken": false,
+        "hasRoleMiddleware": false,
+        "totalRoutes": 5,
+        "routes": [
+            "router.post(\"/\", progressCardController.createProgressCard);",
+            "router.get(\"/\", progressCardController.getAllProgressCards);",
+            "router.get(\"/:id\", progressCardController.getProgressCardById);",
+            "router.put(\"/:id\", progressCardController.updateProgressCard);",
+            "router.delete(\"/:id\", progressCardController.deleteProgressCard);"
+        ]
+    },
+    {
+        "file": "studentRoutes.js",
+        "hasVerifyToken": true,
+        "hasRoleMiddleware": true,
+        "totalRoutes": 5,
+        "routes": [
+            "router.post(",
+            "router.get(",
+            "router.get(",
+            "router.put(",
+            "router.delete("
+        ]
+    },
+    {
+        "file": "timetableRoutes.js",
+        "hasVerifyToken": false,
+        "hasRoleMiddleware": false,
+        "totalRoutes": 5,
+        "routes": [
+            "router.post(\"/\", timetableController.createTimetable);",
+            "router.get(\"/\", timetableController.getAllTimetables);",
+            "router.get(\"/:id\", timetableController.getTimetableById);",
+            "router.put(\"/:id\", timetableController.updateTimetable);",
+            "router.delete(\"/:id\", timetableController.deleteTimetable);"
+        ]
+    },
+    {
+        "file": "transportRoutes.js",
+        "hasVerifyToken": false,
+        "hasRoleMiddleware": false,
+        "totalRoutes": 5,
+        "routes": [
+            "router.post(\"/\", transportController.createTransport);",
+            "router.get(\"/\", transportController.getAllTransport);",
+            "router.get(\"/:id\", transportController.getTransportById);",
+            "router.put(\"/:id\", transportController.updateTransport);",
+            "router.delete(\"/:id\", transportController.deleteTransport);"
+        ]
+    }
+]

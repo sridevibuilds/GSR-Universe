@@ -1,17 +1,26 @@
-const express=require("express");
+// Module 9 Route Security - Assignment Routes
 
-const router=express.Router();
+const express = require("express");
+const router = express.Router();
+const assignmentController = require("../controllers/assignmentController");
+const verifyToken = require("../middleware/authMiddleware");
+const roleMiddleware = require("../middleware/roleMiddleware");
 
-const assignmentController=require("../controllers/assignmentController");
+// Enforce token verification globally
+router.use(verifyToken);
 
-router.post("/",assignmentController.createAssignment);
+// Create, Update, Delete, Grade restricted to Faculty and Admin
+router.post("/", roleMiddleware("FACULTY", "ADMIN"), assignmentController.createAssignment);
+router.post("/grade", roleMiddleware("FACULTY", "ADMIN"), assignmentController.gradeAssignmentSubmission);
+router.put("/:id", roleMiddleware("FACULTY", "ADMIN"), assignmentController.updateAssignment);
+router.delete("/:id", roleMiddleware("FACULTY", "ADMIN"), assignmentController.deleteAssignment);
 
-router.get("/",assignmentController.getAllAssignments);
+// Fetching allowed for all authenticated users
+router.get("/", assignmentController.getAllAssignments);
+router.get("/submissions/list", roleMiddleware("FACULTY", "ADMIN"), assignmentController.getAssignmentSubmissions);
+router.get("/:assignment_id/submissions", roleMiddleware("FACULTY", "ADMIN"), assignmentController.getAssignmentSubmissions);
+router.get("/submissions/:id/view", roleMiddleware("FACULTY", "ADMIN"), assignmentController.viewAssignmentSubmission);
+router.get("/submissions/:id/download", roleMiddleware("FACULTY", "ADMIN"), assignmentController.downloadAssignmentSubmission);
+router.get("/:id", assignmentController.getAssignmentById);
 
-router.get("/:id",assignmentController.getAssignmentById);
-
-router.put("/:id",assignmentController.updateAssignment);
-
-router.delete("/:id",assignmentController.deleteAssignment);
-
-module.exports=router;
+module.exports = router;

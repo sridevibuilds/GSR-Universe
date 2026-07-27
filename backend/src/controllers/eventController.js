@@ -5,8 +5,7 @@ const pool = require("../config/db");
 // ==========================================
 exports.createEvent = async (req, res) => {
     try {
-
-        const {
+        let {
             title,
             description,
             event_date,
@@ -18,6 +17,22 @@ exports.createEvent = async (req, res) => {
             event_status,
             target_scope
         } = req.body;
+
+        // Map status to constraint values: 'Upcoming', 'Completed', 'Cancelled'
+        let mappedStatus = 'Upcoming';
+        if (event_status) {
+            const statusUpper = event_status.trim().toUpperCase();
+            if (statusUpper === 'COMPLETED') {
+                mappedStatus = 'Completed';
+            } else if (statusUpper === 'CANCELLED' || statusUpper === 'CANCELED') {
+                mappedStatus = 'Cancelled';
+            } else {
+                mappedStatus = 'Upcoming'; // Default Scheduled/Upcoming to 'Upcoming'
+            }
+        }
+
+        // Map target scope to constraint values: 'ALL', 'CLASS'
+        const upperScope = (target_scope || 'ALL').toUpperCase() === 'CLASS' ? 'CLASS' : 'ALL';
 
         const result = await pool.query(
             `INSERT INTO events
@@ -43,27 +58,37 @@ exports.createEvent = async (req, res) => {
                 venue,
                 attachment_name,
                 attachment_path,
-                created_by,
-                event_status,
-                target_scope
+                created_by || 1,
+                mappedStatus,
+                upperScope
             ]
         );
+
+        const newEvent = result.rows[0];
+
+        // Insert single notification for all students
+        try {
+            await pool.query(
+                `INSERT INTO public.parent_notifications (student_id, class_id, type, title, message, reference_id)
+                 VALUES (NULL, NULL, 'EVENT', $1::text, $2::text, $3::integer)`,
+                [`Upcoming Event: ${title}`, description || `New event scheduled on ${event_date || 'upcoming dates'}.`, parseInt(newEvent.id, 10)]
+            );
+        } catch (e) {
+            console.error("Failed to insert parent event notification:", e);
+        }
 
         res.status(201).json({
             success: true,
             message: "Event created successfully",
-            data: result.rows[0]
+            data: newEvent
         });
 
     } catch (err) {
-
         console.error(err);
-
         res.status(500).json({
             success: false,
             message: err.message
         });
-
     }
 };
 
@@ -144,7 +169,7 @@ exports.updateEvent = async (req, res) => {
 
         const { id } = req.params;
 
-        const {
+        let {
             title,
             description,
             event_date,
@@ -153,6 +178,22 @@ exports.updateEvent = async (req, res) => {
             event_status,
             target_scope
         } = req.body;
+
+        // Map status to constraint values: 'Upcoming', 'Completed', 'Cancelled'
+        let mappedStatus = 'Upcoming';
+        if (event_status) {
+            const statusUpper = event_status.trim().toUpperCase();
+            if (statusUpper === 'COMPLETED') {
+                mappedStatus = 'Completed';
+            } else if (statusUpper === 'CANCELLED' || statusUpper === 'CANCELED') {
+                mappedStatus = 'Cancelled';
+            } else {
+                mappedStatus = 'Upcoming';
+            }
+        }
+
+        // Map target scope to constraint values: 'ALL', 'CLASS'
+        const upperScope = target_scope ? ((target_scope.toUpperCase() === 'CLASS' ? 'CLASS' : 'ALL')) : 'ALL';
 
         const result = await pool.query(
             `
@@ -174,8 +215,8 @@ exports.updateEvent = async (req, res) => {
                 event_date,
                 event_time,
                 venue,
-                event_status,
-                target_scope,
+                mappedStatus,
+                upperScope,
                 id
             ]
         );

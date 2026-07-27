@@ -1,22 +1,21 @@
+// Module 9 Route Security - Announcement Routes
+
 const express = require("express");
-
 const router = express.Router();
-
 const announcementController = require("../controllers/announcementController");
+const verifyToken = require("../middleware/authMiddleware");
+const roleMiddleware = require("../middleware/roleMiddleware");
 
-// Create Announcement
-router.post("/", announcementController.createAnnouncement);
+// Enforce token verification globally
+router.use(verifyToken);
 
-// Get All Announcements
+// Create, Update, Delete restricted to Faculty and Admin
+router.post("/", roleMiddleware("FACULTY", "ADMIN"), announcementController.createAnnouncement);
+router.put("/:id", roleMiddleware("FACULTY", "ADMIN"), announcementController.updateAnnouncement);
+router.delete("/:id", roleMiddleware("FACULTY", "ADMIN"), announcementController.deleteAnnouncement);
+
+// Fetching allowed for all authenticated users
 router.get("/", announcementController.getAllAnnouncements);
-
-// Get Single Announcement
 router.get("/:id", announcementController.getAnnouncementById);
-
-// Update Announcement
-router.put("/:id", announcementController.updateAnnouncement);
-
-// Delete Announcement
-router.delete("/:id", announcementController.deleteAnnouncement);
 
 module.exports = router;

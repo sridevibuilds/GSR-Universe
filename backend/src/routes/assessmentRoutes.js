@@ -1,21 +1,21 @@
+// Module 9 Route Security - Assessment Routes
+
 const express = require("express");
 const router = express.Router();
-
 const assessmentController = require("../controllers/assessmentController");
+const verifyToken = require("../middleware/authMiddleware");
+const roleMiddleware = require("../middleware/roleMiddleware");
 
-// Create Assessment
-router.post("/", assessmentController.createAssessment);
+// Enforce token verification globally
+router.use(verifyToken);
 
-// Get All Assessments
+// Create, Update, Delete restricted to Faculty and Admin
+router.post("/", roleMiddleware("FACULTY", "ADMIN"), assessmentController.createAssessment);
+router.put("/:id", roleMiddleware("FACULTY", "ADMIN"), assessmentController.updateAssessment);
+router.delete("/:id", roleMiddleware("FACULTY", "ADMIN"), assessmentController.deleteAssessment);
+
+// Fetching allowed for all authenticated users
 router.get("/", assessmentController.getAllAssessments);
-
-// Get Assessment By ID
 router.get("/:id", assessmentController.getAssessmentById);
-
-// Update Assessment
-router.put("/:id", assessmentController.updateAssessment);
-
-// Delete Assessment
-router.delete("/:id", assessmentController.deleteAssessment);
 
 module.exports = router;

@@ -7,7 +7,7 @@ exports.createNotice = async (req, res) => {
 
     try {
 
-        const {
+        let {
             title,
             description,
             attachment_name,
@@ -15,6 +15,8 @@ exports.createNotice = async (req, res) => {
             created_by,
             target_scope
         } = req.body;
+
+        const upperScope = (target_scope || 'ALL').toUpperCase() === 'CLASS' ? 'CLASS' : 'ALL';
 
         const result = await pool.query(
             `
@@ -35,15 +37,28 @@ exports.createNotice = async (req, res) => {
                 description,
                 attachment_name,
                 attachment_path,
-                created_by,
-                target_scope
+                created_by || 1,
+                upperScope
             ]
         );
+
+        const newNotice = result.rows[0];
+
+        // Insert single notification for all students
+        try {
+            await pool.query(
+                `INSERT INTO public.parent_notifications (student_id, class_id, type, title, message, reference_id)
+                 VALUES (NULL, NULL, 'NOTICE', $1::text, $2::text, $3::integer)`,
+                [`Notice: ${title}`, description || 'New official notice posted on notice board.', parseInt(newNotice.id, 10)]
+            );
+        } catch (e) {
+            console.error("Failed to insert parent notice notification:", e);
+        }
 
         res.status(201).json({
             success: true,
             message: "Notice created successfully",
-            data: result.rows[0]
+            data: newNotice
         });
 
     } catch (err) {
@@ -143,13 +158,15 @@ exports.updateNotice = async (req, res) => {
 
         const { id } = req.params;
 
-        const {
+        let {
             title,
             description,
             attachment_name,
             attachment_path,
             target_scope
         } = req.body;
+
+        const upperScope = target_scope ? ((target_scope.toUpperCase() === 'CLASS' ? 'CLASS' : 'ALL')) : 'ALL';
 
         const result = await pool.query(
             `
@@ -168,7 +185,7 @@ exports.updateNotice = async (req, res) => {
                 description,
                 attachment_name,
                 attachment_path,
-                target_scope,
+                upperScope,
                 id
             ]
         );

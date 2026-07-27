@@ -39,8 +39,9 @@ SIDEBAR
 
     <div class="logo-section">
 
-        <img src="assets/images/logo.png"
-             class="logo">
+        <img
+            src="assets/images/logo.png"
+            class="logo">
 
         <h3>GSR Universe</h3>
 
@@ -50,10 +51,13 @@ SIDEBAR
 
     <ul class="sidebar-menu">
 
-        <li class="active">
+        <!-- Dashboard -->
+
+        <li class="active" data-module="dashboard">
 
             <a href="#"
-               onclick="showDashboard()">
+
+               onclick="showDashboard(); return false;">
 
                 <i class="bi bi-grid-fill"></i>
 
@@ -63,10 +67,13 @@ SIDEBAR
 
         </li>
 
-        <li>
+        <!-- Faculty Management -->
+
+        <li data-module="faculty">
 
             <a href="#"
-               onclick="loadModule('faculty')">
+
+               onclick="loadModule('faculty'); return false;">
 
                 <i class="bi bi-people-fill"></i>
 
@@ -76,10 +83,13 @@ SIDEBAR
 
         </li>
 
+        <!-- Logout -->
+
         <li>
 
             <a href="#"
-               onclick="logout()">
+
+               onclick="logout(); return false;">
 
                 <i class="bi bi-box-arrow-right"></i>
 
@@ -230,7 +240,7 @@ SUMMARY CARDS
 
 </section>
 <!-- =====================================================
-QUICK ACTIONS
+FACULTY MANAGEMENT SHORTCUT
 ===================================================== -->
 
 <section class="content-area">
@@ -245,7 +255,7 @@ QUICK ACTIONS
 
     <p>
 
-        Manage faculty accounts and monitor the ERP system.
+        Manage faculty accounts from one centralized location.
 
     </p>
 
@@ -253,77 +263,71 @@ QUICK ACTIONS
 
 <div class="row">
 
-    <!-- Quick Actions -->
+    <!-- Faculty Management -->
 
     <div class="col-lg-8">
 
         <div class="card dashboard-card mb-4">
 
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
 
-                <h5>
+                <h5 class="mb-0">
 
-                    Quick Actions
+                    Faculty Management
 
                 </h5>
+
+                <span class="badge bg-primary">
+
+                    Administrator
+
+                </span>
 
             </div>
 
             <div class="card-body">
 
-                <div class="row">
+                <div class="row align-items-center">
 
-                    <div class="col-md-4 mb-3">
+                    <div class="col-lg-8">
+
+                        <h4 class="text-primary fw-bold">
+
+                            Faculty Management
+
+                        </h4>
+
+                        <p class="text-muted">
+
+                            Create faculty accounts, edit faculty
+                            information, disable accounts and
+                            permanently remove faculty members.
+
+                        </p>
 
                         <button
 
-                            class="btn btn-primary w-100 py-3"
+                            class="btn btn-primary px-4 py-2"
 
                             onclick="loadModule('faculty')">
 
-                            <i class="bi bi-person-plus-fill fs-2"></i>
+                            <i class="bi bi-people-fill"></i>
 
-                            <br><br>
-
-                            Add Faculty
+                            Open Faculty Management
 
                         </button>
 
                     </div>
 
-                    <div class="col-md-4 mb-3">
+                    <div class="col-lg-4 text-center">
 
-                        <button
+                        <i
 
-                            class="btn btn-warning w-100 py-3"
+                            class="bi bi-people-fill"
 
-                            onclick="loadModule('faculty')">
+                            style="font-size:90px;color:#2563EB;">
 
-                            <i class="bi bi-pencil-square fs-2"></i>
-
-                            <br><br>
-
-                            Edit Faculty
-
-                        </button>
-
-                    </div>
-
-                    <div class="col-md-4 mb-3">
-
-                        <button
-
-                            class="btn btn-danger w-100 py-3"
-
-                            onclick="loadModule('faculty')">
-
-                            <i class="bi bi-trash-fill fs-2"></i>
-
-                            <br><br>
-
-                            Remove Faculty
-
-                        </button>
+                        </i>
 
                     </div>
 
@@ -367,7 +371,7 @@ QUICK ACTIONS
 
                         <th>ERP</th>
 
-                        <td>GSR Universe</td>
+                        <td>GSR Universe ERP</td>
 
                     </tr>
 
@@ -375,7 +379,7 @@ QUICK ACTIONS
 
                         <th>Backend</th>
 
-                        <td>Node.js</td>
+                        <td>Node.js + Express</td>
 
                     </tr>
 
@@ -412,10 +416,6 @@ QUICK ACTIONS
     </div>
 
 </div>
-
-<!-- =====================================================
-DYNAMIC MODULE AREA
-===================================================== -->
 
 <div
 
