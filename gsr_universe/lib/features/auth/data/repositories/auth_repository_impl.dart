@@ -57,9 +57,9 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> parentSendOtp(String mobile) async {
+  Future<String?> parentSendOtp(String mobile) async {
     try {
-      await remoteDataSource.parentSendOtp(mobile);
+      return await remoteDataSource.parentSendOtp(mobile);
     } on ServerException catch (e) {
       throw ServerException(e.message);
     } catch (e) {

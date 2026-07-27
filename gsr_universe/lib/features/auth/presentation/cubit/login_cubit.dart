@@ -52,8 +52,8 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> sendParentOtp(String mobile) async {
     emit(LoginLoading());
     try {
-      await authRepository.parentSendOtp(mobile);
-      emit(OtpSentSuccess(mobile));
+      final otp = await authRepository.parentSendOtp(mobile);
+      emit(OtpSentSuccess(mobile, otp));
     } on ServerException catch (e) {
       emit(LoginFailure(e.message));
     } catch (_) {

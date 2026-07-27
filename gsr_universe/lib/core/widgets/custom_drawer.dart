@@ -68,6 +68,8 @@ class CustomDrawer extends StatelessWidget {
                   AppSpacing.h12,
                   Text(
                     userName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -76,6 +78,8 @@ class CustomDrawer extends StatelessWidget {
                   ),
                   Text(
                     userRole,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.inter(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -86,6 +90,8 @@ class CustomDrawer extends StatelessWidget {
                     AppSpacing.h4,
                     Text(
                       subtext!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.inter(
                         fontSize: 11,
                         color: Colors.white.withValues(alpha: 0.6),
@@ -114,13 +120,17 @@ class CustomDrawer extends StatelessWidget {
                     errorBuilder: (_, __, ___) => const Icon(Icons.school, color: Colors.white, size: 32),
                   ),
                   const SizedBox(width: 12),
-                  Text(
-                    "GSR UNIVERSE",
-                    style: GoogleFonts.outfit(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: Colors.white,
-                      letterSpacing: 1.0,
+                  Expanded(
+                    child: Text(
+                      "GSR UNIVERSE",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.outfit(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.white,
+                        letterSpacing: 1.0,
+                      ),
                     ),
                   ),
                 ],
@@ -130,14 +140,17 @@ class CustomDrawer extends StatelessWidget {
           // 2. Navigation items list
           Expanded(
             child: ListView.builder(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
               itemCount: items.length,
               itemBuilder: (context, index) {
                 final item = items[index];
                 return ListTile(
+                  dense: true,
                   leading: Icon(item.icon, color: AppColors.gradientStart),
                   title: Text(
                     item.title.tr(context),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.inter(
                       fontWeight: FontWeight.w600,
                       color: AppColors.textDark,
@@ -155,19 +168,25 @@ class CustomDrawer extends StatelessWidget {
 
           // 3. Bottom logout action
           const Divider(color: AppColors.borderLight, height: 1.0),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-            child: ListTile(
-              leading: const Icon(Icons.logout, color: AppColors.danger),
-              title: Text(
-                "Logout".tr(context),
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.danger,
-                  fontSize: 14,
+          SafeArea(
+            top: false,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+              child: ListTile(
+                dense: true,
+                leading: const Icon(Icons.logout, color: AppColors.danger),
+                title: Text(
+                  "Logout".tr(context),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.inter(
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.danger,
+                    fontSize: 14,
+                  ),
                 ),
+                onTap: onLogout,
               ),
-              onTap: onLogout,
             ),
           ),
         ],

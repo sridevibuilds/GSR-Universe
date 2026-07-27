@@ -5,7 +5,7 @@ abstract class AuthRemoteDataSource {
   Future<Map<String, dynamic>> adminLogin(String email, String password);
   Future<Map<String, dynamic>> facultyLogin(String email, String password);
   Future<void> facultyForgotPassword(String email);
-  Future<void> parentSendOtp(String mobile);
+  Future<String?> parentSendOtp(String mobile);
   Future<Map<String, dynamic>> parentVerifyOtp(String mobile, String otp);
   Future<Map<String, dynamic>> parentSwitchChild(int studentId);
 }
@@ -41,10 +41,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<void> parentSendOtp(String mobile) async {
-    await apiClient.post('/api/auth/parent/send-otp', data: {
+  Future<String?> parentSendOtp(String mobile) async {
+    final response = await apiClient.post('/api/auth/parent/send-otp', data: {
       'mobile': mobile,
     });
+    if (response.data != null && response.data['otp'] != null) {
+      return response.data['otp'].toString();
+    }
+    return null;
   }
 
   @override

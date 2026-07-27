@@ -13,11 +13,12 @@ class LoginLoading extends LoginState {}
 
 class OtpSentSuccess extends LoginState {
   final String mobile;
+  final String? otp;
 
-  const OtpSentSuccess(this.mobile);
+  const OtpSentSuccess(this.mobile, [this.otp]);
 
   @override
-  List<Object?> get props => [mobile];
+  List<Object?> get props => [mobile, otp];
 }
 
 class LoginSuccess extends LoginState {

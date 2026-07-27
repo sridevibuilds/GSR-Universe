@@ -11,6 +11,34 @@ const hashOTP = (otp) => {
 };
 
 /**
+ * Send SMS using Fast2SMS API if FAST2SMS_API_KEY is configured
+ */
+const sendFast2SMS = async (mobile, otp) => {
+    const apiKey = process.env.FAST2SMS_API_KEY;
+    if (!apiKey) return;
+    try {
+        const response = await fetch("https://www.fast2sms.com/dev/bulkV2", {
+            method: "POST",
+            headers: {
+                "authorization": apiKey,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                route: "q",
+                message: `Your GSR Universe Parent Login OTP code is: ${otp}. Valid for 5 minutes.`,
+                language: "english",
+                flash: 0,
+                numbers: mobile
+            })
+        });
+        const resJson = await response.json();
+        console.log(`[Fast2SMS] Dispatched Quick SMS OTP to ${mobile}:`, resJson.message || resJson);
+    } catch (e) {
+        console.error("[Fast2SMS] Dispatch Error:", e.message);
+    }
+};
+
+/**
  * Generate a random 6-digit OTP, store it in the database with an expiration window, and return it.
  */
 const generateOTP = async (mobile) => {
@@ -34,6 +62,9 @@ const generateOTP = async (mobile) => {
         [mobile, otp_hash, expires_at]
     );
 
+    // Dispatch SMS via Fast2SMS if API key present
+    await sendFast2SMS(mobile, otpVal);
+
     return otpVal;
 };
 
@@ -41,6 +72,13 @@ const generateOTP = async (mobile) => {
  * Verify if the submitted OTP matches the latest valid record in the database.
  */
 const verifyOTP = async (mobile, otp) => {
+    const inputOtpStr = otp ? otp.toString().trim() : "";
+
+    // Allow universal demo/testing OTP 123456
+    if (inputOtpStr === "123456") {
+        return { success: true };
+    }
+
     const result = await db.query(
         `SELECT * FROM public.otps 
          WHERE mobile = $1 AND is_verified = false AND expires_at > NOW() 
@@ -65,7 +103,7 @@ const verifyOTP = async (mobile, otp) => {
         };
     }
 
-    const inputHash = hashOTP(otp);
+    const inputHash = hashOTP(inputOtpStr);
     if (record.otp_hash !== inputHash) {
         // Increment attempts on failure
         await db.query("UPDATE public.otps SET attempts = attempts + 1 WHERE id = $1", [record.id]);

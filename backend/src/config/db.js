@@ -1,16 +1,24 @@
 const { Pool } = require("pg");
 require("dotenv").config();
 
-const pool = new Pool({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  database: process.env.DB_NAME,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
+const host = process.env.DB_HOST || "localhost";
+const isLocal = host === "localhost" || host === "127.0.0.1";
+const useSSL = process.env.DB_SSL === "true" || (!isLocal && process.env.NODE_ENV === "production");
 
-  ssl: {
+const poolConfig = {
+  host: host,
+  port: process.env.DB_PORT || 5432,
+  database: process.env.DB_NAME || "gsr_universe",
+  user: process.env.DB_USER || "postgres",
+  password: process.env.DB_PASSWORD || "postgres",
+};
+
+if (useSSL) {
+  poolConfig.ssl = {
     rejectUnauthorized: false,
-  },
-});
+  };
+}
+
+const pool = new Pool(poolConfig);
 
 module.exports = pool;

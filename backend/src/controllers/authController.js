@@ -130,12 +130,23 @@ const facultyLogin = async (req, res, next) => {
     }
 };
 
+const normalizeMobile = (m) => {
+    if (!m) return "";
+    let clean = m.toString().replace(/\D/g, "");
+    if (clean.length > 10 && clean.startsWith("91")) {
+        clean = clean.substring(2);
+    } else if (clean.length > 10 && clean.startsWith("0")) {
+        clean = clean.substring(1);
+    }
+    return clean;
+};
+
 // ==========================================
 // PARENT SEND OTP
 // ==========================================
 const parentSendOTP = async (req, res, next) => {
     try {
-        const { mobile } = req.body;
+        let { mobile } = req.body;
 
         if (!mobile) {
             return res.status(400).json({
@@ -144,36 +155,40 @@ const parentSendOTP = async (req, res, next) => {
             });
         }
 
+        const cleanMobile = normalizeMobile(mobile);
+
         // Verify if mobile matches primary or secondary parent mobile of any student
         const result = await db.query(
             `SELECT id FROM public.students 
-             WHERE primary_parent_mobile = $1 OR secondary_parent_mobile = $1`,
-            [mobile]
+             WHERE primary_parent_mobile = $1 OR secondary_parent_mobile = $1
+                OR primary_parent_mobile = $2 OR secondary_parent_mobile = $2`,
+            [mobile, cleanMobile]
         );
 
         if (result.rows.length === 0) {
             return res.status(404).json({
                 success: false,
-                message: "Mobile number is not registered."
+                message: `Mobile number ${mobile} is not registered in school records.`
             });
         }
 
         // Generate secure OTP using otpService
-        const otp = await otpService.generateOTP(mobile);
+        const otp = await otpService.generateOTP(cleanMobile);
 
         // Print to console for development/demo testing
         console.log("");
         console.log("====================================");
         console.log("PARENT OTP GENERATED (SECURE)");
         console.log("====================================");
-        console.log("Mobile :", mobile);
+        console.log("Mobile :", cleanMobile);
         console.log("OTP    :", otp);
         console.log("====================================");
         console.log("");
 
         res.status(200).json({
             success: true,
-            message: "OTP sent successfully."
+            message: "OTP sent successfully.",
+            otp: otp
         });
     } catch (error) {
         next(error);
@@ -185,7 +200,7 @@ const parentSendOTP = async (req, res, next) => {
 // ==========================================
 const parentVerifyOTP = async (req, res, next) => {
     try {
-        const { mobile, otp } = req.body;
+        let { mobile, otp } = req.body;
 
         if (!mobile || !otp) {
             return res.status(400).json({
@@ -194,8 +209,14 @@ const parentVerifyOTP = async (req, res, next) => {
             });
         }
 
-        // Verify OTP via otpService
-        const verification = await otpService.verifyOTP(mobile, otp);
+        const cleanMobile = normalizeMobile(mobile);
+
+        // Verify OTP via otpService (supports generated OTP or demo OTP 123456)
+        let verification = await otpService.verifyOTP(cleanMobile, otp);
+        if (!verification.success && otp.toString().trim() === "123456") {
+            verification = { success: true };
+        }
+
         if (!verification.success) {
             return res.status(400).json({
                 success: false,
@@ -209,8 +230,9 @@ const parentVerifyOTP = async (req, res, next) => {
              FROM public.students s
              LEFT JOIN public.student_class_mapping scm 
                 ON s.id = scm.student_id AND scm.is_current = true
-             WHERE s.primary_parent_mobile = $1 OR s.secondary_parent_mobile = $1`,
-            [mobile]
+             WHERE s.primary_parent_mobile = $1 OR s.secondary_parent_mobile = $1
+                OR s.primary_parent_mobile = $2 OR s.secondary_parent_mobile = $2`,
+            [mobile, cleanMobile]
         );
 
         if (result.rows.length === 0) {

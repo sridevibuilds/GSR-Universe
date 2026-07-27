@@ -7,7 +7,7 @@ class ApiClient {
   final Dio dio;
   final SecureStorage secureStorage;
 
-  static const String defaultBaseUrl = 'http://10.243.137.70:5000';
+  static const String defaultBaseUrl = 'https://gsr-universe.onrender.com';
   static final String _baseUrl = defaultBaseUrl;
   static void Function()? onSessionExpired;
 
