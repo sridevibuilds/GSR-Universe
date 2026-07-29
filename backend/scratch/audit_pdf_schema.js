@@ -1,51 +1,60 @@
-const { Pool } = require("pg");
-const path = require("path");
-require("dotenv").config({ path: path.join(__dirname, "../.env") });
+const pool = require("../src/config/db");
 
-const pool = new Pool({
-    host: process.env.DB_HOST || "localhost",
-    port: process.env.DB_PORT || 5432,
-    database: process.env.DB_NAME || "gsr_universe",
-    user: process.env.DB_USER || "postgres",
-    password: process.env.DB_PASSWORD || "postgres"
-});
-
-async function auditSchema() {
+async function auditPdfSchema() {
     try {
-        console.log("=== HOMEWORK TABLE COLUMNS ===");
-        const hwCols = await pool.query(`SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'homework'`);
+        console.log("=== 1. HOMEWORK TABLE SCHEMA ===");
+        const hwCols = await pool.query(`
+            SELECT column_name, data_type 
+            FROM information_schema.columns 
+            WHERE table_name = 'homework'
+        `);
         console.table(hwCols.rows);
 
-        console.log("=== HOMEWORK SUBMISSIONS TABLE COLUMNS ===");
-        const hwSubCols = await pool.query(`SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'homework_submissions'`);
+        console.log("=== 2. HOMEWORK SUBMISSIONS TABLE SCHEMA ===");
+        const hwSubCols = await pool.query(`
+            SELECT column_name, data_type 
+            FROM information_schema.columns 
+            WHERE table_name = 'homework_submissions'
+        `);
         console.table(hwSubCols.rows);
 
-        console.log("=== ASSIGNMENTS TABLE COLUMNS ===");
-        const assignCols = await pool.query(`SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'assignments'`);
+        console.log("=== 3. ASSIGNMENTS TABLE SCHEMA ===");
+        const assignCols = await pool.query(`
+            SELECT column_name, data_type 
+            FROM information_schema.columns 
+            WHERE table_name = 'assignments'
+        `);
         console.table(assignCols.rows);
 
-        console.log("=== ASSIGNMENT SUBMISSIONS TABLE COLUMNS ===");
-        const assignSubCols = await pool.query(`SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'assignment_submissions'`);
+        console.log("=== 4. ASSIGNMENT SUBMISSIONS TABLE SCHEMA ===");
+        const assignSubCols = await pool.query(`
+            SELECT column_name, data_type 
+            FROM information_schema.columns 
+            WHERE table_name = 'assignment_submissions'
+        `);
         console.table(assignSubCols.rows);
 
-        console.log("=== SAMPLE DATA ===");
-        const hw = await pool.query(`SELECT id, title, file_name, file_path FROM homework LIMIT 3`);
-        console.log("Homework:", hw.rows);
+        console.log("\n=== RECENT HOMEWORK ROWS ===");
+        const hwRows = await pool.query("SELECT id, title, attachment_path, file_path FROM homework ORDER BY id DESC LIMIT 5");
+        console.table(hwRows.rows);
 
-        const hwSub = await pool.query(`SELECT id, homework_id, student_id, file_name, file_path FROM homework_submissions LIMIT 3`);
-        console.log("Homework Submissions:", hwSub.rows);
+        console.log("\n=== RECENT HOMEWORK SUBMISSION ROWS ===");
+        const hwSubRows = await pool.query("SELECT id, homework_id, student_id, submission_file_path, file_path FROM homework_submissions ORDER BY id DESC LIMIT 5");
+        console.table(hwSubRows.rows);
 
-        const assign = await pool.query(`SELECT id, title, file_name, file_path FROM assignments LIMIT 3`);
-        console.log("Assignments:", assign.rows);
+        console.log("\n=== RECENT ASSIGNMENT ROWS ===");
+        const assignRows = await pool.query("SELECT id, title, attachment_path, file_path FROM assignments ORDER BY id DESC LIMIT 5");
+        console.table(assignRows.rows);
 
-        const assignSub = await pool.query(`SELECT id, assignment_id, student_id, file_name, file_path FROM assignment_submissions LIMIT 3`);
-        console.log("Assignment Submissions:", assignSub.rows);
+        console.log("\n=== RECENT ASSIGNMENT SUBMISSION ROWS ===");
+        const assignSubRows = await pool.query("SELECT id, assignment_id, student_id, submission_file_path, file_path FROM assignment_submissions ORDER BY id DESC LIMIT 5");
+        console.table(assignSubRows.rows);
 
     } catch (err) {
-        console.error("Audit error:", err);
+        console.error(err);
     } finally {
         await pool.end();
     }
 }
 
-auditSchema();
+auditPdfSchema();

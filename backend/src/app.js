@@ -67,6 +67,7 @@ const transportRoutes = require("./routes/transportRoutes");
 const timetableRoutes = require("./routes/timetableRoutes");
 const parentRoutes = require("./routes/parentRoutes");
 const meetingRoutes = require("./routes/meetingRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 
 // =======================================
@@ -149,6 +150,7 @@ app.use("/api/v1/timetable", timetableRoutes);
 app.use(["/api/parent", "/api/v1/parent", "/parent", "/v1/parent", "/api/student", "/api/v1/student", "/student", "/v1/student"], parentRoutes);
 app.use("/api/meetings", meetingRoutes);
 app.use("/api/v1/meetings", meetingRoutes);
+app.use(["/api/admin", "/api/v1/admin"], adminRoutes);
 
 // Direct submission file view and download endpoints
 const homeworkController = require("./controllers/homeworkController");

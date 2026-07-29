@@ -52,6 +52,14 @@ class AdminRepositoryImpl implements AdminRepository {
   }
 
   @override
+  Future<Map<String, dynamic>> getAdminOverview() async {
+    return _executeWithCache(
+      cacheKey: 'admin_overview_metrics',
+      remoteCall: () => remoteDataSource.getAdminOverview(),
+    );
+  }
+
+  @override
   Future<List<Map<String, dynamic>>> getAllFaculty() async {
     return _executeWithCache(
       cacheKey: 'admin_faculty_records',

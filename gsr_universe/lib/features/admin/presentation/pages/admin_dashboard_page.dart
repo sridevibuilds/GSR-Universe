@@ -49,24 +49,24 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
         }
       },
       builder: (context, state) {
-        // Sum metrics dynamically from class billing reports
-        int totalStudents = 0;
-        double totalPaid = 0.0;
-        double totalDue = 0.0;
+        // Metrics dynamically loaded from PostgreSQL via overview API
+        final overview = state.overviewMetrics;
+        int totalStudents = int.tryParse(overview?['total_students']?.toString() ?? '0') ?? 0;
+        double totalPaid = double.tryParse(overview?['collected_fee_amount']?.toString() ?? '0') ?? 0.0;
+        double totalDue = double.tryParse(overview?['outstanding_fee_amount']?.toString() ?? '0') ?? 0.0;
 
-        for (var report in state.feeReports) {
-          final int students =
-              int.tryParse(report['total_students']?.toString() ?? '0') ?? 0;
-
-          final double paid =
-              double.tryParse(report['total_fees_paid']?.toString() ?? '0') ?? 0.0;
-
-          final double due =
-              double.tryParse(report['total_fees_due']?.toString() ?? '0') ?? 0.0;
-
-          totalStudents += students;
-          totalPaid += paid;
-          totalDue += due;
+        if (overview == null && state.feeReports.isNotEmpty) {
+          for (var report in state.feeReports) {
+            final int students =
+                int.tryParse(report['total_students']?.toString() ?? '0') ?? 0;
+            final double paid =
+                double.tryParse(report['total_fees_paid']?.toString() ?? '0') ?? 0.0;
+            final double due =
+                double.tryParse(report['total_fees_due']?.toString() ?? '0') ?? 0.0;
+            totalStudents += students;
+            totalPaid += paid;
+            totalDue += due;
+          }
         }
 
         final bool callsActive = state.callSettings?['is_enabled'] ?? false;

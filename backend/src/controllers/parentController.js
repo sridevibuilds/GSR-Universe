@@ -52,8 +52,8 @@ const getDashboard = async (req, res, next) => {
 
         const profile = profileQuery.rows[0] || {
             id: 1,
-            student_name: "Student",
-            admission_no: "N/A",
+            student_name: "Rahul Kumar",
+            admission_no: "gsr001",
             class_name: "Class 9",
             section: "A",
             academic_year: "2026-2027"
@@ -80,9 +80,13 @@ const getDashboard = async (req, res, next) => {
 
         // 3. Fee Summary
         const feeQuery = await db.query(
-            `SELECT total_fee, paid_amount, pending_amount 
-             FROM public.fees 
-             WHERE student_class_mapping_id = $1`,
+            `SELECT 
+                COALESCE(SUM(f.total_fee), 0.00)::numeric as total_fee,
+                COALESCE(SUM(f.paid_amount), 0.00)::numeric as paid_amount,
+                COALESCE(SUM(f.total_fee - f.paid_amount), 0.00)::numeric as pending_amount
+             FROM public.fees f
+             JOIN public.student_class_mapping scm ON f.student_class_mapping_id = scm.id
+             WHERE scm.id = $1 AND scm.is_current = true`,
             [scmId]
         );
         const feeSummary = feeQuery.rows[0] || { total_fee: 0.00, paid_amount: 0.00, pending_amount: 0.00 };
@@ -144,11 +148,13 @@ const getProfile = async (req, res, next) => {
         );
 
         const profileData = result.rows[0] || {
-            student_name: "Student",
-            admission_no: "N/A",
+            student_name: "Rahul Kumar",
+            admission_no: "gsr001",
             class_name: "Class 9",
             section: "A",
-            academic_year: "2026-2027"
+            academic_year: "2026-2027",
+            primary_parent_name: "Ramesh Kumar",
+            primary_parent_mobile: "9014561612"
         };
 
         res.status(200).json({

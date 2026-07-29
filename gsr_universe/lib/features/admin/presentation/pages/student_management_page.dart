@@ -22,7 +22,7 @@ class StudentManagementPage extends StatefulWidget {
 
 class _StudentManagementPageState extends State<StudentManagementPage> {
   String _selectedYear = '2026-2027';
-  String _selectedClass = 'Class 10';
+  String _selectedClass = 'Class 9';
   String _selectedSection = 'A';
   String _selectedTerm = 'Annual';
 

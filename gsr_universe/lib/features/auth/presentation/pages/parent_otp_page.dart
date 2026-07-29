@@ -55,16 +55,22 @@ class _ParentOtpPageState extends State<ParentOtpPage> {
       child: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
           if (state is OtpSentSuccess) {
-            final displayOtp = state.otp ?? "123456";
+            final String? realOtp = state.otp;
             setState(() {
               _otpSent = true;
-              _otpController.text = displayOtp;
+              if (realOtp != null && realOtp.isNotEmpty) {
+                _otpController.text = realOtp;
+              } else {
+                _otpController.clear();
+              }
             });
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text("OTP Sent Successfully! Verification Code: $displayOtp"),
+                content: Text((realOtp != null && realOtp.isNotEmpty)
+                    ? "OTP Sent Successfully! Verification Code: $realOtp"
+                    : "OTP Sent Successfully! Please enter verification code."),
                 backgroundColor: AppColors.success,
-                duration: const Duration(seconds: 8),
+                duration: const Duration(seconds: 10),
               ),
             );
           }

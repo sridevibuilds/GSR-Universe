@@ -1,5 +1,6 @@
 // Domain Layer - Admin Repository Interface
 abstract class AdminRepository {
+  Future<Map<String, dynamic>> getAdminOverview();
   Future<List<Map<String, dynamic>>> getAllFaculty();
   Future<void> createFaculty(Map<String, dynamic> payload);
   Future<void> updateFaculty(int id, Map<String, dynamic> payload);

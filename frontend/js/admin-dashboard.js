@@ -75,6 +75,34 @@ async function loadDashboard() {
 
     await loadFacultyCount();
 
+    await loadOverviewMetrics();
+
+}
+
+async function loadOverviewMetrics() {
+    try {
+        const response = await fetch(
+            API.adminOverview,
+            {
+                headers: {
+                    Authorization: "Bearer " + TOKEN
+                }
+            }
+        );
+        const result = await response.json();
+        if (response.ok && result.success && result.overview) {
+            const totalStudentsEl = document.getElementById("totalStudents");
+            if (totalStudentsEl) {
+                totalStudentsEl.textContent = result.overview.total_students || 0;
+            }
+            const outstandingFeeEl = document.getElementById("outstandingFees");
+            if (outstandingFeeEl) {
+                outstandingFeeEl.textContent = "₹" + (result.overview.outstanding_fee_amount || 0).toLocaleString();
+            }
+        }
+    } catch (error) {
+        console.error("Overview Metrics Error:", error);
+    }
 }
 
 // =====================================================

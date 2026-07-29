@@ -12,6 +12,10 @@ const API = {
 
     auth: `${API_BASE_URL}/auth`,
 
+    adminOverview: `${API_BASE_URL}/admin/overview`,
+
+    classReports: `${API_BASE_URL}/admin/class-reports`,
+
     students: `${API_BASE_URL}/students`,
 
     faculty: `${API_BASE_URL}/faculty`,

@@ -5,6 +5,7 @@ class AdminState extends Equatable {
   final bool isLoading;
   final String? errorMessage;
   final String? successMessage;
+  final Map<String, dynamic>? overviewMetrics;
   final List<Map<String, dynamic>> facultyList;
   final Map<String, dynamic>? callSettings;
   final List<Map<String, dynamic>> callHistory;
@@ -17,6 +18,7 @@ class AdminState extends Equatable {
     this.isLoading = false,
     this.errorMessage,
     this.successMessage,
+    this.overviewMetrics,
     this.facultyList = const [],
     this.callSettings,
     this.callHistory = const [],
@@ -30,6 +32,7 @@ class AdminState extends Equatable {
     bool? isLoading,
     String? errorMessage,
     String? successMessage,
+    Map<String, dynamic>? overviewMetrics,
     List<Map<String, dynamic>>? facultyList,
     Map<String, dynamic>? callSettings,
     List<Map<String, dynamic>>? callHistory,
@@ -42,6 +45,7 @@ class AdminState extends Equatable {
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage,
       successMessage: successMessage,
+      overviewMetrics: overviewMetrics ?? this.overviewMetrics,
       facultyList: facultyList ?? this.facultyList,
       callSettings: callSettings ?? this.callSettings,
       callHistory: callHistory ?? this.callHistory,
@@ -57,6 +61,7 @@ class AdminState extends Equatable {
         isLoading,
         errorMessage,
         successMessage,
+        overviewMetrics,
         facultyList,
         callSettings,
         callHistory,
