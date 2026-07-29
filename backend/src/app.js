@@ -162,6 +162,16 @@ app.use("/api/v1/meetings", meetingRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/v1/admin", adminRoutes);
 
+// Direct Admin endpoints for guaranteed resolution
+const adminController = require("./controllers/adminController");
+const roleMiddleware = require("./middleware/roleMiddleware");
+app.get("/api/admin/overview", verifyToken, roleMiddleware("ADMIN"), adminController.getAdminOverview);
+app.get("/api/v1/admin/overview", verifyToken, roleMiddleware("ADMIN"), adminController.getAdminOverview);
+app.get("/api/admin/class-reports", verifyToken, roleMiddleware("ADMIN", "FACULTY"), adminController.getClassReport);
+app.get("/api/v1/admin/class-reports", verifyToken, roleMiddleware("ADMIN", "FACULTY"), adminController.getClassReport);
+app.get("/api/admin/system-notifications", verifyToken, roleMiddleware("ADMIN"), adminController.getSystemNotifications);
+app.get("/api/v1/admin/system-notifications", verifyToken, roleMiddleware("ADMIN"), adminController.getSystemNotifications);
+
 // Direct submission file view and download endpoints
 const homeworkController = require("./controllers/homeworkController");
 const assignmentController = require("./controllers/assignmentController");
