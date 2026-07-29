@@ -1,28 +1,33 @@
+require('dotenv').config();
+const jwt = require('../src/utils/jwt');
+
 async function probeRenderRoutes() {
-    console.log("=== PROBING ALL RENDER BACKEND ROUTES ===");
+    console.log("=== PROBING DEPLOYED RENDER BACKEND WITH AUTH HEADER ===");
     const baseUrl = "https://gsr-universe.onrender.com";
+    const token = jwt({ id: 1, role: "ADMIN" });
+
+    const headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+    };
 
     const routesToTest = [
-        "/",
-        "/api/auth/parent/send-otp",
-        "/api/auth/admin/login",
-        "/api/admin/overview",
-        "/api/v1/admin/overview",
-        "/admin/overview",
-        "/api/admin/login",
-        "/api/fees/calls/settings"
+        { path: "/api/admin/overview", method: "GET" },
+        { path: "/api/fees/calls/settings", method: "GET" },
+        { path: "/api/auth/parent/send-otp", method: "POST", body: { mobile: "9014561612" } }
     ];
 
-    for (const route of routesToTest) {
+    for (const item of routesToTest) {
         try {
-            const res = await fetch(`${baseUrl}${route}`, {
-                method: route.includes("login") || route.includes("send-otp") ? "POST" : "GET",
-                headers: { "Content-Type": "application/json" }
+            const res = await fetch(`${baseUrl}${item.path}`, {
+                method: item.method,
+                headers,
+                body: item.body ? JSON.stringify(item.body) : undefined
             });
             const data = await res.json().catch(() => null);
-            console.log(`Route: ${route.padEnd(35)} | Status: ${res.status} | Response:`, JSON.stringify(data));
+            console.log(`Route: ${item.path.padEnd(35)} | Status: ${res.status} | Response:`, JSON.stringify(data, null, 2));
         } catch (err) {
-            console.log(`Route: ${route.padEnd(35)} | Error: ${err.message}`);
+            console.log(`Route: ${item.path.padEnd(35)} | Error: ${err.message}`);
         }
     }
 }

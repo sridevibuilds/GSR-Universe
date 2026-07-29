@@ -147,11 +147,20 @@ app.use("/api/v1/transport", transportRoutes);
 app.use("/api/timetable", timetableRoutes);
 app.use("/api/v1/timetable", timetableRoutes);
 
-app.use(["/api/parent", "/api/v1/parent", "/parent", "/v1/parent", "/api/student", "/api/v1/student", "/student", "/v1/student"], parentRoutes);
+app.use("/api/parent", parentRoutes);
+app.use("/api/v1/parent", parentRoutes);
+app.use("/parent", parentRoutes);
+app.use("/v1/parent", parentRoutes);
+app.use("/api/student", parentRoutes);
+app.use("/api/v1/student", parentRoutes);
+app.use("/student", parentRoutes);
+app.use("/v1/student", parentRoutes);
+
 app.use("/api/meetings", meetingRoutes);
 app.use("/api/v1/meetings", meetingRoutes);
-console.log("adminRoutes:", typeof adminRoutes);
-app.use(["/api/admin", "/api/v1/admin"], adminRoutes);
+
+app.use("/api/admin", adminRoutes);
+app.use("/api/v1/admin", adminRoutes);
 
 // Direct submission file view and download endpoints
 const homeworkController = require("./controllers/homeworkController");
