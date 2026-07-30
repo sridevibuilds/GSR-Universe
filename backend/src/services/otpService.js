@@ -15,7 +15,10 @@ const hashOTP = (otp) => {
  */
 const sendFast2SMS = async (mobile, otp) => {
     const apiKey = process.env.FAST2SMS_API_KEY;
-    if (!apiKey) return;
+    if (!apiKey) {
+        console.error("[Fast2SMS] Error: FAST2SMS_API_KEY is not configured in process.env!");
+        return;
+    }
     try {
         const response = await fetch("https://www.fast2sms.com/dev/bulkV2", {
             method: "POST",

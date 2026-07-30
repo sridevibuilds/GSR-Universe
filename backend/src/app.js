@@ -31,6 +31,7 @@ app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Rate Limiter: Max 200 requests per 15 minutes per IP
+app.set("trust proxy", 1);
 const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 200,
